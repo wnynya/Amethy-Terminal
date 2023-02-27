@@ -25,23 +25,26 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class TerminalDashboard {
 
-  private static int serverCurrentTPS = 0;
-  public static int serverLastTPS = 0;
+  private static int TPS_CURRENT = 0;
+  public static int TPS_LAST = 0;
 
-  private static final ExecutorService executorService = Executors.newFixedThreadPool(1);
-  private static BukkitTask bukkitTask1t;
-  private static final Timer timer1s = new Timer();
+  private static final ExecutorService onEnableExecutor = Executors.newFixedThreadPool(1);
+  private static BukkitTask onEnableBukkitTask1t;
+  private static final Timer onEnableTimer1s = new Timer();
 
-  private static Json systemInfo = null;
+  private static Json cachedSystemInfo = null;
 
   public static void onEnable() {
-    bukkitTask1t = Bukkit.getScheduler().runTaskTimer(AmethyTerminal.PLUGIN, () -> serverCurrentTPS++, 0L, 1L);
-    executorService.submit(() -> {
-      timer1s.schedule(new TimerTask() {
+    onEnableBukkitTask1t = Bukkit.getScheduler().runTaskTimer(AmethyTerminal.PLUGIN, () -> {
+      TPS_CURRENT++;
+    }, 0L, 1L);
+
+    onEnableExecutor.submit(() -> {
+      onEnableTimer1s.schedule(new TimerTask() {
         @Override
         public void run() {
-          serverLastTPS = serverCurrentTPS;
-          serverCurrentTPS = 0;
+          TPS_LAST = TPS_CURRENT;
+          TPS_CURRENT = 0;
           sendSystemStatus();
         }
       }, 0, 1000);
@@ -49,17 +52,19 @@ public class TerminalDashboard {
   }
 
   public static void onDisable() {
-    bukkitTask1t.cancel();
-    timer1s.cancel();
-    executorService.shutdownNow();
+    onEnableBukkitTask1t.cancel();
+    onEnableTimer1s.cancel();
+    onEnableExecutor.shutdownNow();
   }
 
-  public static Json getSystemInfo() {
-    if (systemInfo != null) {
-      return systemInfo;
+  public static Json getCachedSystemInfo() {
+    if (cachedSystemInfo != null) {
+      return cachedSystemInfo;
     }
+
     Json object = new Json();
 
+    // 시스템 정보
     try {
       Json system = new Json();
       OperatingSystemMXBean osb = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
@@ -73,6 +78,7 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
+    // 사용자 정보
     try {
       Json user = new Json();
       user.set("name", System.getProperty("user.name"));
@@ -82,6 +88,7 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
+    // OS 정보
     try {
       Json os = new Json();
       os.set("version", System.getProperty("os.version"));
@@ -91,6 +98,7 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
+    // JVM 정보
     try {
       Json java = new Json();
       java.set("version", System.getProperty("java.vm.version"));
@@ -101,6 +109,7 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
+    // 버킷 서버 정보
     try {
       Json server = new Json();
       server.set("name", Bukkit.getServer().getName());
@@ -115,6 +124,7 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
+    // 네트워크 정보
     try {
       Json network = new Json();
       String ip = null;
@@ -147,6 +157,7 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
+    // 명령어 목록
     try {
       List<String> commands = new ArrayList<String>();
       for (HelpTopic topic : Bukkit.getHelpMap().getHelpTopics()) {
@@ -159,30 +170,44 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
-    systemInfo = object;
-    return systemInfo;
+    cachedSystemInfo = object;
+    return cachedSystemInfo;
   }
 
   public static Json getSystemStatus() {
     Json object = new Json();
 
+    // 서버 업타임
+    try {
+      long uptime = ManagementFactory.getRuntimeMXBean().getUptime();
+      object.set("uptime", uptime);
+    } catch (Exception ignored) {
+    }
+
+    // 메모리 상태
     try {
       Runtime r = Runtime.getRuntime();
       object.set("memory-free", r.freeMemory());
       object.set("memory-max", r.maxMemory());
       object.set("memory-total", r.totalMemory());
+    } catch (Exception ignored) {
+    }
+
+    // 프로세서 상태
+    try {
       OperatingSystemMXBean osb = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
       object.set("cpu-system-load", osb.getCpuLoad());
       object.set("cpu-process-load", osb.getProcessCpuLoad());
-      object.set("tps", serverLastTPS);
     } catch (Exception ignored) {
     }
 
-    try {
-      object.set("players-count", Bukkit.getServer().getOnlinePlayers().size());
-    } catch (Exception ignored) {
-    }
+    // 현재 TPS
+    object.set("tps", TPS_LAST);
 
+    // 플레이어 수
+    object.set("players-count", Bukkit.getServer().getOnlinePlayers().size());
+
+    // 엔티티 수
     try {
       int entitiesCount = Bukkit.getScheduler().callSyncMethod(AmethyTerminal.PLUGIN, new Callable<Integer>() {
         @Override
@@ -198,6 +223,7 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
+    // 청크 수
     try {
       int chunks = 0;
       int forceChunks = 0;
@@ -210,17 +236,11 @@ public class TerminalDashboard {
     } catch (Exception ignored) {
     }
 
-    try {
-      long uptime = ManagementFactory.getRuntimeMXBean().getUptime();
-      object.set("uptime", uptime);
-    } catch (Exception ignored) {
-    }
-
     return object;
   }
 
   public static void sendSystemInfo() {
-    TerminalNode.event("dashboard/systeminfo", getSystemInfo());
+    TerminalNode.event("dashboard/systeminfo", getCachedSystemInfo());
   }
 
   public static void sendSystemStatus() {

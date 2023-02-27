@@ -2,7 +2,7 @@ name: Amethy-Terminal
 version: 1.19-dev
 main: io.wany.amethy.terminal.AmethyTerminal
 
-description: Amethy Terminal
+description: Remote terminal for minecraft server
 author: Wany
 website: https://amethy.wany.io
 
@@ -27,4 +27,5 @@ loadbefore:
 commands:
   amethyterminal:
     permission: amethy.terminal.command.amethyterminal
+    usage: 'Usage: /<command> (version|reload|debug|update|updater)'
     aliases: [at, aterm]
