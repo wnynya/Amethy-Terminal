@@ -1,0 +1,30 @@
+name: Amethy-Terminal
+version: 1.19-dev
+main: io.wany.amethy.terminal.AmethyTerminal
+
+description: Amethy Terminal
+author: Wany
+website: https://amethy.wany.io
+
+api-version: 1.18
+loadbefore:
+  - Amethy
+  - CoreProtect
+  - Cucumbery
+  - Essentials
+  - HolographicDisplays
+  - LuckPerms
+  - mcMMO
+  - NoteBlockAPI
+  - PlugMan
+  - ProtocolLib
+  - QuickShop
+  - Vault
+  - VoxelSniper
+  - WorldEdit
+  - WorldGuard
+
+commands:
+  amethyterminal:
+    permission: amethy.terminal.command.amethyterminal
+    aliases: [at, aterm]
