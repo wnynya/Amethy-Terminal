@@ -212,6 +212,8 @@ public class Json {
         object.add(Boolean.parseBoolean(String.valueOf(value)));
       } else if (value instanceof Object[]) {
         object.add(parseArray((Object[]) value));
+      } else if (value instanceof Json) {
+        object.add(JsonParser.parseString(((Json) value).toString()));
       } else if (value instanceof JsonElement) {
         object.add((JsonElement) value);
       }
@@ -230,6 +232,8 @@ public class Json {
         object.add(Boolean.parseBoolean(String.valueOf(value)));
       } else if (value instanceof Object[]) {
         object.add(parseArray((Object[]) value));
+      } else if (value instanceof Json) {
+        object.add(JsonParser.parseString(((Json) value).toString()));
       } else if (value instanceof JsonElement) {
         object.add((JsonElement) value);
       }

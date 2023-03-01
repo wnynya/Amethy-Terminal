@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import io.wany.amethy.terminal.AmethyTerminal;
 import io.wany.amethy.terminal.Console;
 import io.wany.amethy.terminal.Updater;
+import io.wany.amethy.terminal.panels.filesystem.TerminalFile;
 import io.wany.amethy.terminal.BukkitPluginLoader;
 
 public class AmethyTerminalCommand implements CommandExecutor {
@@ -214,6 +215,57 @@ public class AmethyTerminalCommand implements CommandExecutor {
           info(sender, "Usage: /" + label + " " + args[0] + " (channel|automation)");
           return true;
         }
+      }
+
+      case "test" -> {
+        if (!sender.hasPermission("amethy.terminal.test")) {
+          // 오류: 권한 없음
+          error(sender, "You don't have permission");
+          return true;
+        }
+
+        try {
+          TerminalFile tfo = new TerminalFile(new File("eula.txt"));
+          TerminalFile tfc = new TerminalFile(new File("eula-copy.txt"), tfo.chunks());
+          tfo.read((index, buffer) -> {
+            Console.debug(index + ": " + buffer);
+            tfc.write(index, buffer);
+          });
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
+        return true;
+      }
+
+      case "test2" -> {
+        if (!sender.hasPermission("amethy.terminal.test")) {
+          // 오류: 권한 없음
+          error(sender, "You don't have permission");
+          return true;
+        }
+
+        try {
+          TerminalFile tfc = new TerminalFile(new File("eula-copy.txt"), 7);
+          tfc.write(2,
+              "7J2067iU6rO864qUCiDri6TrpbgsIO2KueydtO2VnCDrsKnsi53snLzroZwg7J6R64+Z7ZWc64ukLiDrtoDtkogg7JWE656Y7JeQIOyKpO2UhOungeydtCDri6zroKQg7J6I7Ja0IOqwgOyatOuNsCDqtazrqY3snZgg7YGs6riw6rCAIOyekeydgCAxMuyduOy5mOuCmCAxMOyduOy5mOydmCDsnYzrsJjsnYAg67aA7ZKI7J2EIOq3uOuMgOuhnCDriIzrn6wg7ZqM7KCE7YyQ7JeQIOyYrOumtCDsiJgg7J6ICiDri6QuIOuwmOuptCDqsIDsmrTrjbAg6rWs6w==");
+          tfc.write(3,
+              "qY3snZgg7YGs6riw6rCAIO2BsCA37J247LmYIOuPhOuEmyDtmJXtg5zsnZgg7J2M67CY7J2AIOq4iOyGjSDrtoDtkojsnbQg64iM65+s7KC4IOuTpOyWtOqwgOyngCDslYrqs6Ag6re464yA66GcIOyeiOyWtCDsnbzrsJjsoIHsnbgg7YS07YWM7J2067iU7JeQ7ISc7J2YIDfsnbjsuZgg7Ja0646B7YSwIOyXre2VoOydhCDrjIDsi6DtlZzri6QuIAog7J20IOygnO2SiOydmCDsm5Drnpgg7Lm07Yq466as7KeA64qUIOyWkeuptOyduOuNsCDqsIHqsIEgTA==");
+          tfc.write(0,
+              "ZXVsYT10cnVlCu2EtO2FjOydtOu4lOydgCDruIzrnbzsmrQgUEMgMyDsoJztkojqs7wg6rCZ7J2AIO2Yle2DnOydtOuLpC4g7ZqM7KCEIOyGjeuPhOuKlCAxNiAvIDMzIC8gNDUgLyA3OCBSUE3snYQg7KeA7JuQ7ZWcCuuLpC4g7Jik66W47Kq9IOybkOuwmCDtmJXtg5zsnZgg66CI67KE66W8IOybgOyngeyXrCDsho3rj4Trpbwg7KGw7KCV7ZWgIOyImCDsnojri6QuIO2GpOyVlOydgCDrs4Trj4TsnZgg7Lmo7JWVIOyhsOyglSDquLDriqXsnYAg7JeG6g==");
+          tfc.write(5,
+              "67CY7KCB7J24IExQIOyaqSDshLjrnbzrr7kg7Lm07Yq466as7KeA66GcIOqwnOyhsCDrkJwg7IOB7YOc6528IOq4sOuKpeydhCDsoITrtoAg7IKs7Jqp7ZWY6riwIOychO2VtOyEoCDsm5DrnpjrjIDroZzsnZgg67O17JuQ7J20IO2VhOyalO2VmOuLpC4K6rCB6rCBIDEy7J247LmYIExQIC8gMTDsnbjsuZggU1AgLyA37J247LmYIOyLseq4gOydhCDsmKzroKQg65GUIOuqqOyKtS4g642u6rCc66W8IOuNruycvOuptCAxMuyduOy5mCDsnYzrsJjrj4Qg6w==");
+          tfc.write(6,
+              "gZ3rtoDrtoTsnbQg642u6rCc7JeQIOu2gOuUqu2eiOyngCDslYrqs6Ag7KCV7ZmV7ZWY6rKMIOuTpOyWtOunnuuKlOuLpC4=");
+          tfc.write(1,
+              "s6AsIO2YhOuMgOydmCDthLTthYzsnbTruJTrs7Tri6Qg67mE6rWQ7KCBIOustOqxsOyatCDsoJXrj4QK7J2064ukLiDtmozsoITtjJDsnZgg7YWM65GQ66as7JeQ64qUIOydjOuwmOydhCDsnqHslYQg7KO86riwIOychO2VnCDqs6DrrLTqsIAg7Jik6rCB7ZiV7J2YIOygkCDtmJXtg5zroZwg67aA7LCp65CY7Ja0IOyeiOuLpC4g6rCA7Jq0642wIOyeiOuKlCDsgrzqsIEg67Cp7IKs7ZiV7J2YIOq4iOyGjSDrtoDtkojsnYAg67O07Ya17J2YIO2EtO2FjA==");
+          tfc.write(4,
+              "UCDsmYAgU1Ag7J2M67CYIOyerOyDneydhCDsnITtlbQg64uk66W4IOyerOyniOqzvCDtmJXtg5zsnZgg67CU64qY66GcIOq1rOyEseuQmOyWtCDsnojri6QuIOydtCDrsJTripjsnYAg7Yak7JWUIOuBneydmCDsnpHsnYAg64W467iM66W8IOuPjOugpCDqsIHqsIHsnZgg67CU64qY66GcIOuwlOq+uOyWtCDsk7gg7IiYIOyeiOuLpC4gCuyCrOynhOydmCDsoJztkojsnYAg7Lm07Yq466as7KeA6rCAIOydtOyghCDshozsnKDsnpDsl5Ag7J2Y7ZW0IOydvA==");
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
+        return true;
       }
 
       default -> {

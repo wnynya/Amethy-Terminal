@@ -8,6 +8,7 @@ import java.util.function.BiConsumer;
 
 import io.wany.amethy.terminal.panels.console.TerminalConsole;
 import io.wany.amethy.terminal.panels.dashboard.TerminalDashboard;
+import io.wany.amethy.terminal.panels.filesystem.TerminalFilesystem;
 import io.wany.amethy.terminal.modules.EventEmitter;
 import io.wany.amethy.terminal.modules.Json;
 import io.wany.amethy.terminal.modules.network.WebSocketClient;
@@ -15,7 +16,7 @@ import io.wany.amethy.terminal.modules.network.WebSocketClientOptions;
 
 public class TerminalNode {
 
-  protected static final String API = "lab-api.wany.io/amethy/terminal/nodes";
+  protected static final String API = "api.wany.io/amethy/terminal/nodes";
 
   protected static WebSocketClient WEBSOCKET;
   protected static boolean OPENED = false;
@@ -37,6 +38,7 @@ public class TerminalNode {
   protected static void onEnable() {
     onEnableExecutor.submit(() -> {
       TerminalDashboard.onEnable();
+      TerminalFilesystem.onEnable();
     });
   }
 
@@ -50,6 +52,7 @@ public class TerminalNode {
 
       TerminalDashboard.onDisable();
       TerminalConsole.onDisable();
+      TerminalFilesystem.onDisable();
 
       onDisableExecutor.shutdown();
       onEnableExecutor.shutdown();
@@ -145,11 +148,18 @@ public class TerminalNode {
     });
   }
 
-  public static void event(String event, Json data) {
+  public static void event(String event, Json client, Json data) {
     if (!isOpened()) {
       return;
     }
-    WEBSOCKET.event(event, data);
+    Json obj = new Json();
+    obj.set("client", client);
+    obj.set("data", data);
+    WEBSOCKET.event(event, obj);
+  }
+
+  public static void event(String event, Json data) {
+    event(event, new Json(), data);
   }
 
   public static boolean isOpened() {
