@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import io.wany.amethy.terminal.Console;
 import io.wany.amethy.terminal.TerminalNode;
 import io.wany.amethy.terminal.modules.Json;
 
