@@ -22,13 +22,13 @@ This is Amethy Terminal node plugin for bukkit-compatible minecraft servers. Com
 
 ## Installation
 
-Download latest version of Amethy Terminal plugin.
+1. Download latest version of Amethy Terminal plugin.
 
-Button here: [<button>Amethy-Terminal-Bukkit.jar (dev channel)</button>](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/dev/latest/Amethy-Terminal-Bukkit.jar)
+2. Download here: [`Amethy-Terminal-Bukkit.jar (dev channel)`](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/dev/latest/Amethy-Terminal-Bukkit.jar)
 
-Insert `Amethy-Terminal-Bukkit.jar` into `plugins` directory of your minecraft server.
+3. Insert `Amethy-Terminal-Bukkit.jar` into `plugins` directory of your minecraft server.
 
-Restart / Reload your server or use plugin like Plugman to load plugin.
+4. Restart / Reload your server or use plugin like [`Plugman`](https://www.spigotmc.org/resources/plugmanx.88135) to load plugin.
 
 ## Web Terminal
 
