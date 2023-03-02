@@ -56,7 +56,9 @@ public class TerminalNodeAPI {
 
   protected static boolean newNode() {
     try {
-      Json res = JsonPost("", new Json());
+      Json body = new Json();
+      body.set("type", "bukkit");
+      Json res = JsonPost("", body);
       Console.debug(res.getString("data.uid"));
       Console.debug(res.getString("data.key"));
       AmethyTerminal.UID = res.getString("data.uid");

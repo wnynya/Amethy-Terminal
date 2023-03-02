@@ -1,7 +1,6 @@
 package io.wany.amethy.terminal.bukkit;
 
 import java.io.File;
-import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -15,6 +14,14 @@ import io.wany.amethy.terminal.bukkit.commands.AmethyTerminalCommand;
 import io.wany.amethy.terminal.bukkit.commands.AmethyTerminalTabCompleter;
 import io.wany.amethy.terminal.bukkit.modules.Json;
 
+/**
+ *
+ * Amethy Terminal (Bukkit)
+ * https://amethy.wany.io
+ * 
+ * ©2023 Wany <sung@wany.io> (https://wany.io)
+ *
+ */
 public class AmethyTerminal extends JavaPlugin {
 
   public static AmethyTerminal PLUGIN;
@@ -76,15 +83,12 @@ public class AmethyTerminal extends JavaPlugin {
   }
 
   protected void registerCommand(String cmd, CommandExecutor exc, TabCompleter tab) {
-    Map<String, Map<String, Object>> map = PLUGIN.getDescription().getCommands();
-    if (map.containsKey(cmd)) {
-      PluginCommand pc = this.getCommand(cmd);
-      if (pc == null) {
-        return;
-      }
-      pc.setExecutor(exc);
-      pc.setTabCompleter(tab);
+    PluginCommand pc = this.getCommand(cmd);
+    if (pc == null) {
+      return;
     }
+    pc.setExecutor(exc);
+    pc.setTabCompleter(tab);
   }
 
   protected void registerEvent(Listener l) {

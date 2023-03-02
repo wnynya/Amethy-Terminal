@@ -121,8 +121,8 @@ public class AmethyTerminalCommand implements CommandExecutor {
         }
         // 정보: 플러그인 버전
         info(sender, "Found newer version of plugin");
-        info(sender, "  Current: " + AmethyTerminal.NAME + " v" + version);
-        info(sender, "  Latest: " + AmethyTerminal.NAME + " v" + AmethyTerminal.VERSION);
+        info(sender, "  Current: " + AmethyTerminal.NAME + " v" + AmethyTerminal.VERSION);
+        info(sender, "  Latest: " + AmethyTerminal.NAME + " v" + version);
         // 정보: 파일 다운로드 시작
         info(sender, "Downloading file...");
         File file;

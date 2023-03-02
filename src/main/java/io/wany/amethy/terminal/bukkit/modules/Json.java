@@ -11,7 +11,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-@SuppressWarnings("all")
 public class Json {
 
   JsonObject object = null;
@@ -166,23 +165,23 @@ public class Json {
     return this.getJsonElement(path) != null ? this.getJsonElement(path).getAsString() : null;
   }
 
-  public boolean getBoolean(String path) {
+  public Boolean getBoolean(String path) {
     return this.getJsonElement(path) != null ? this.getJsonElement(path).getAsBoolean() : null;
   }
 
-  public int getInt(String path) {
+  public Integer getInt(String path) {
     return this.getJsonElement(path) != null ? this.getJsonElement(path).getAsInt() : null;
   }
 
-  public float getFloat(String path) {
+  public Float getFloat(String path) {
     return this.getJsonElement(path) != null ? this.getJsonElement(path).getAsFloat() : null;
   }
 
-  public double getDouble(String path) {
+  public Double getDouble(String path) {
     return this.getJsonElement(path) != null ? this.getJsonElement(path).getAsDouble() : null;
   }
 
-  public long getLong(String path) {
+  public Long getLong(String path) {
     return this.getJsonElement(path) != null ? this.getJsonElement(path).getAsLong() : null;
   }
 

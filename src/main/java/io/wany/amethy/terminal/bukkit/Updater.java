@@ -19,8 +19,8 @@ import io.wany.amethy.terminal.bukkit.modules.network.HTTPRequest;
 
 public class Updater {
 
-  private static final String API = "api.wany.io/amethy/repository/Amethy-Terminal";
-  public static String CHANNEL = "release";
+  private static final String API = "api.wany.io/amethy/repository/Amethy-Terminal-Bukkit";
+  public static String CHANNEL = "dev";
   public static boolean AUTOMATION = false;
 
   private static ExecutorService onEnableExecutor = Executors.newFixedThreadPool(1);
