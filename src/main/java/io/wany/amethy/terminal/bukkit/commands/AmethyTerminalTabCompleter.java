@@ -27,6 +27,14 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
     return list;
   }
 
+  private static List<String> listOf(String... args) {
+    List<String> list = new ArrayList<String>();
+    for (String arg : args) {
+      list.add(arg);
+    }
+    return list;
+  }
+
   private static void usedFlags(String[] args, int commandArgsLength, List<String> list) {
     int n = 0;
     for (String arg : args) {
@@ -55,7 +63,7 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
 
     switch (name) {
 
-      case "amethyterminal" -> {
+      case "amethyterminal": {
 
         // amethyterminal ?
         if (args.length == 1) {
@@ -82,26 +90,26 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
         args[0] = args[0].toLowerCase();
         switch (args[0].toLowerCase()) {
 
-          case "debug" -> {
+          case "debug": {
             if (!sender.hasPermission("amethy.terminal.debug")) {
               return Collections.emptyList();
             }
             // amethyterminal debug ?
             if (args.length == 2) {
-              List<String> list = List.of("channel", "automation");
+              List<String> list = listOf("channel", "automation");
               return autoComplete(list, args[args.length - 1]);
             } else {
               return Collections.emptyList();
             }
           }
 
-          case "update" -> {
+          case "update": {
             if (!sender.hasPermission("amethy.terminal.updater.update")) {
               return Collections.emptyList();
             }
             int commandArgsLength = 1;
             // flags
-            List<String> flags = List.of("-silent", "-force");
+            List<String> flags = listOf("-silent", "-force");
             if (args.length <= commandArgsLength + flags.size()) {
               List<String> list = new ArrayList<>(flags);
               usedFlags(args, commandArgsLength, list);
@@ -110,25 +118,25 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
             return Collections.emptyList();
           }
 
-          case "updater" -> {
+          case "updater": {
             if (!sender.hasPermission("amethy.terminal.updater")) {
               return Collections.emptyList();
             }
             // amethyterminal updater ?
             if (args.length == 2) {
-              List<String> list = List.of("channel", "automation");
+              List<String> list = listOf("channel", "automation");
               return autoComplete(list, args[args.length - 1]);
             }
             // amethyterminal updater [1] ?
             else if (args.length == 3) {
               // amethyterminal updater channel ?
               if (args[1].toLowerCase() == "channel") {
-                List<String> list = List.of("release", "dev");
+                List<String> list = listOf("release", "dev");
                 return autoComplete(list, args[args.length - 1]);
               }
               // amethyterminal updater automation ?
               else if (args[1].toLowerCase() == "automation") {
-                List<String> list = List.of("enable", "disable");
+                List<String> list = listOf("enable", "disable");
                 return autoComplete(list, args[args.length - 1]);
               } else {
                 return Collections.emptyList();

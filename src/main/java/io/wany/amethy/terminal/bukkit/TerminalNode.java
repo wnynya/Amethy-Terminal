@@ -9,6 +9,8 @@ import java.util.function.BiConsumer;
 import io.wany.amethy.terminal.bukkit.panels.console.TerminalConsole;
 import io.wany.amethy.terminal.bukkit.panels.dashboard.TerminalDashboard;
 import io.wany.amethy.terminal.bukkit.panels.filesystem.TerminalFilesystem;
+import io.wany.amethy.terminal.bukkit.panels.players.TerminalPlayers;
+import io.wany.amethy.terminal.bukkit.panels.worlds.TerminalWorlds;
 import io.wany.amethy.terminal.bukkit.modules.EventEmitter;
 import io.wany.amethy.terminal.bukkit.modules.Json;
 import io.wany.amethy.terminal.bukkit.modules.network.WebSocketClient;
@@ -39,6 +41,8 @@ public class TerminalNode {
     onEnableExecutor.submit(() -> {
       TerminalDashboard.onEnable();
       TerminalFilesystem.onEnable();
+      TerminalPlayers.onEnable();
+      TerminalWorlds.onEnable();
     });
   }
 
@@ -53,6 +57,8 @@ public class TerminalNode {
       TerminalDashboard.onDisable();
       TerminalConsole.onDisable();
       TerminalFilesystem.onDisable();
+      TerminalPlayers.onDisable();
+      TerminalWorlds.onDisable();
 
       onDisableExecutor.shutdown();
       onEnableExecutor.shutdown();

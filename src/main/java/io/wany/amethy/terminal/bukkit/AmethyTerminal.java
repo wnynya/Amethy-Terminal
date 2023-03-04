@@ -39,6 +39,8 @@ public class AmethyTerminal extends JavaPlugin {
   public static boolean DEBUG = false;
   protected static String UID = "";
   protected static String KEY = "";
+  private static int JAVA_VERSION;
+  private static boolean DISABLED = false;
 
   @Override
   public void onLoad() {
@@ -58,12 +60,34 @@ public class AmethyTerminal extends JavaPlugin {
       CONFIG.set("debug", false);
     }
 
+    String javaVersion = System.getProperty("java.version");
+    if (javaVersion.startsWith("1.")) {
+      javaVersion = javaVersion.substring(2, 3);
+    } else {
+      int dot = javaVersion.indexOf(".");
+      if (dot != -1) {
+        javaVersion = javaVersion.substring(0, dot);
+      }
+    }
+    JAVA_VERSION = Integer.parseInt(javaVersion);
+
+    if (JAVA_VERSION < 11) {
+      DISABLED = true;
+      return;
+    }
+
     TerminalNode.onLoad();
 
   }
 
   @Override
   public void onEnable() {
+
+    if (DISABLED) {
+      Console.error("Plugin requires Java version >= 11 to run. Disable plugin.");
+      BukkitPluginLoader.unload();
+      return;
+    }
 
     registerCommand("amethyterminal", new AmethyTerminalCommand(), new AmethyTerminalTabCompleter());
 
@@ -75,6 +99,10 @@ public class AmethyTerminal extends JavaPlugin {
 
   @Override
   public void onDisable() {
+
+    if (DISABLED) {
+      return;
+    }
 
     TerminalNode.onDisable();
 

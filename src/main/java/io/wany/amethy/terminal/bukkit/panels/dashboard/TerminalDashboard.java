@@ -1,6 +1,7 @@
 package io.wany.amethy.terminal.bukkit.panels.dashboard;
 
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.ArrayList;
@@ -11,8 +12,6 @@ import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import com.sun.management.OperatingSystemMXBean;
 
 import io.wany.amethy.terminal.bukkit.AmethyTerminal;
 import io.wany.amethy.terminal.bukkit.TerminalNode;
@@ -57,7 +56,7 @@ public class TerminalDashboard {
     onEnableExecutor.shutdownNow();
   }
 
-  public static Json getCachedSystemInfo() {
+  public static Json getSystemInfo() {
     if (cachedSystemInfo != null) {
       return cachedSystemInfo;
     }
@@ -67,13 +66,11 @@ public class TerminalDashboard {
     // 시스템 정보
     try {
       Json system = new Json();
-      OperatingSystemMXBean osb = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+      java.lang.management.OperatingSystemMXBean osb = ManagementFactory.getOperatingSystemMXBean();
       system.set("name", osb.getName());
       system.set("version", osb.getVersion());
       system.set("arch", osb.getArch());
       system.set("availableProcessors", osb.getAvailableProcessors());
-      system.set("totalMemorySize", osb.getTotalMemorySize());
-      system.set("committedVirtualMemorySize", osb.getCommittedVirtualMemorySize());
       object.set("system", system);
     } catch (Exception ignored) {
     }
@@ -174,6 +171,7 @@ public class TerminalDashboard {
     return cachedSystemInfo;
   }
 
+  @SuppressWarnings("deprecation")
   public static Json getSystemStatus() {
     Json object = new Json();
 
@@ -195,10 +193,25 @@ public class TerminalDashboard {
 
     // 프로세서 상태
     try {
-      OperatingSystemMXBean osb = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-      object.set("cpu-system-load", osb.getCpuLoad());
+      Class<?> sunOsb = Class.forName("com.sun.management.OperatingSystemMXBean");
+      boolean cpuLoad = false;
+      for (Method m : sunOsb.getDeclaredMethods()) {
+        if (m.getName().equals("getCpuLoad")) {
+          cpuLoad = true;
+        }
+      }
+      com.sun.management.OperatingSystemMXBean osb = (com.sun.management.OperatingSystemMXBean) ManagementFactory
+          .getOperatingSystemMXBean();
+      if (cpuLoad) {
+        object.set("cpu-system-load", osb.getCpuLoad());
+      } else {
+        object.set("cpu-system-load", osb.getSystemCpuLoad());
+      }
       object.set("cpu-process-load", osb.getProcessCpuLoad());
-    } catch (Exception ignored) {
+    } catch (Throwable t) {
+      java.lang.management.OperatingSystemMXBean osb = ManagementFactory.getOperatingSystemMXBean();
+      object.set("cpu-system-load", osb.getSystemLoadAverage());
+      object.set("cpu-process-load", osb.getSystemLoadAverage());
     }
 
     // 현재 TPS
@@ -240,7 +253,7 @@ public class TerminalDashboard {
   }
 
   public static void sendSystemInfo() {
-    TerminalNode.event("dashboard/systeminfo", getCachedSystemInfo());
+    TerminalNode.event("dashboard/systeminfo", getSystemInfo());
   }
 
   public static void sendSystemStatus() {

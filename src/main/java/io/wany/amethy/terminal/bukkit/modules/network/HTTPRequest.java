@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -27,6 +28,14 @@ public class HTTPRequest extends EventEmitter {
 
   private HttpURLConnection req;
   private CompletableFuture<Object> future;
+
+  private static List<Method> listOf(Method... args) {
+    List<Method> list = new ArrayList<Method>();
+    for (Method arg : args) {
+      list.add(arg);
+    }
+    return list;
+  }
 
   public HTTPRequest(URL url, HTTPRequestOptions opts, String body) {
     super();
@@ -55,7 +64,7 @@ public class HTTPRequest extends EventEmitter {
     });
     this.req.setConnectTimeout(this.opts.TIMEOUT);
 
-    if (List.of(Method.POST, Method.PUT, Method.PATCH, Method.DELETE).contains(this.opts.METHOD)
+    if (listOf(Method.POST, Method.PUT, Method.PATCH, Method.DELETE).contains(this.opts.METHOD)
         && this.body != null && !this.body.isBlank()) {
       this.req.setDoOutput(true);
       DataOutputStream outputStream = new DataOutputStream(this.req.getOutputStream());
