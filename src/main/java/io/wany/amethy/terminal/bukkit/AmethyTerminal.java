@@ -18,6 +18,7 @@ import io.wany.amethy.terminal.bukkit.modules.Json;
  *
  * Amethy Terminal (Bukkit)
  * https://amethy.wany.io
+ * https://github.com/wnynya/Amethy-Terminal
  * 
  * ©2023 Wany <sung@wany.io> (https://wany.io)
  *
