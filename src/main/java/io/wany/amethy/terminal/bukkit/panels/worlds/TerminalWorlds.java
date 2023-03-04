@@ -155,10 +155,19 @@ public class TerminalWorlds {
       return;
     }
 
-    if (world.getGameRuleDefault(gameRule) instanceof Integer) {
-      world.setGameRule((GameRule<Integer>) gameRule, Integer.parseInt(value));
-    } else {
-      world.setGameRule((GameRule<Boolean>) gameRule, Boolean.valueOf(value));
+    try {
+      Bukkit.getScheduler().callSyncMethod(AmethyTerminal.PLUGIN, new Callable<Object>() {
+        @Override
+        public Integer call() {
+          if (world.getGameRuleDefault(gameRule) instanceof Integer) {
+            world.setGameRule((GameRule<Integer>) gameRule, Integer.parseInt(value));
+          } else {
+            world.setGameRule((GameRule<Boolean>) gameRule, Boolean.valueOf(value));
+          }
+          return null;
+        }
+      }).get();
+    } catch (Exception ignored) {
     }
   }
 

@@ -100,14 +100,13 @@ public class TerminalPlayers {
     Location locs = player.getBedSpawnLocation();
     if (locs == null) {
       locs = player.getWorld().getSpawnLocation();
-    } else {
-      object.set("spawn.world", locs.getWorld().getName());
-      object.set("spawn.x", locs.getX());
-      object.set("spawn.y", locs.getY());
-      object.set("spawn.z", locs.getZ());
-      object.set("spawn.yaw", locs.getYaw());
-      object.set("spawn.pitch", locs.getPitch());
     }
+    object.set("spawn.world", locs.getWorld().getName());
+    object.set("spawn.x", locs.getX());
+    object.set("spawn.y", locs.getY());
+    object.set("spawn.z", locs.getZ());
+    object.set("spawn.yaw", locs.getYaw());
+    object.set("spawn.pitch", locs.getPitch());
 
     Json connection = new Json();
     InetSocketAddress socketAddress = player.getAddress();
