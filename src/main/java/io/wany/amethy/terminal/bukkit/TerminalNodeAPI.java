@@ -71,4 +71,14 @@ public class TerminalNodeAPI {
     }
   }
 
+  public static boolean grant(String aid) {
+    try {
+      Json body = new Json();
+      body.set("owner", aid);
+      JsonPost(AmethyTerminal.UID + "/grant", body);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
 }

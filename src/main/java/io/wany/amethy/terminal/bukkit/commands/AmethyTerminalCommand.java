@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import io.wany.amethy.terminal.bukkit.AmethyTerminal;
 import io.wany.amethy.terminal.bukkit.Console;
+import io.wany.amethy.terminal.bukkit.TerminalNodeAPI;
 import io.wany.amethy.terminal.bukkit.Updater;
 import io.wany.amethy.terminal.bukkit.BukkitPluginLoader;
 
@@ -207,6 +208,38 @@ public class AmethyTerminalCommand implements CommandExecutor {
             // 오류: 알 수 없는 args[1]
             error(sender, "Unknown argument");
             info(sender, "Usage: /" + label + " " + args[0] + " (channel|automation)");
+            return true;
+          }
+        } else {
+          // 오류: args[1] 필요
+          error(sender, "Insufficient arguments");
+          info(sender, "Usage: /" + label + " " + args[0] + " (channel|automation)");
+          return true;
+        }
+      }
+
+      case "grant": {
+        if (!(sender instanceof CommandSender)) {
+          // 오류: 콘솔 명령어로만 사용 가능
+          error(sender, "You don't have permission");
+          return true;
+        }
+
+        if (!sender.hasPermission("amethy.terminal.grant")) {
+          // 오류: 권한 없음
+          error(sender, "You don't have permission");
+          return true;
+        }
+
+        if (args.length >= 2) {
+          String aid = args[1];
+          if (TerminalNodeAPI.grant(aid)) {
+            // 정보: 권한 부여 성공
+            info(sender, "Permission granted successfully.");
+            return true;
+          } else {
+            // 오류: 권한 부여 실패
+            error(sender, "Failed to grant permission.");
             return true;
           }
         } else {
