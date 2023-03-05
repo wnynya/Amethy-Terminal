@@ -53,14 +53,34 @@ TODO
 
 ## 명령어
 
-### Check plugin version
+### 플러그인 버전 확인
 
 `/aterm version`
 
-### Update plugin
+### 플러그인 업데이트
 
 `/aterm update`
 
-### Reload plugin
+### 플러그인 업데이터 설정 확인 및 변경
+
+`/aterm updater (channel|automation) [args...]`
+
+현재 업데이터 채널 확인
+
+`/aterm updater channel`
+
+업데이터 채널을 release / dev 로 변경
+
+`/aterm updater channel (release|dev)`
+
+현재 자동 업데이트 활성화 여부 확인
+
+`/aterm updater automation`
+
+자동 업데이트 활성화 / 비활성화
+
+`/aterm updater automation (enable|disable)`
+
+### 플러그인 리로드
 
 `/aterm reload`
