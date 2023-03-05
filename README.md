@@ -36,7 +36,7 @@ TODO
 아메시 터미널은 1.14.\* - 1.19.\* 버전의 마인크래프트 서버와 호환됩니다.<br>
 아메시 터미널 플러그인을 사용하려면 자바 버전 11 이상의 환경에서 서버를 실행해야 합니다.
 
-## 설치와 기본 설정
+# 설치와 기본 설정
 
 1. 아래의 링크 혹은 [`아메시 홈페이지`](https://amethy.wany.io) 에서 플러그인의 최신 버전을 다운로드합니다.<br>
    [`Amethy-Terminal-Bukkit.jar (클릭하여 다운로드)`](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/release/latest/Amethy-Terminal-Bukkit.jar)
@@ -49,38 +49,56 @@ TODO
 
 5. [`Amethy Terminal 웹 사이트`](https://amethy.wany.io/terminal)를 방문하여 웹 터미널을 사용합니다.
 
-## 웹 터미널 사용
+# 웹 터미널 사용
 
-## 명령어
+## 대시보드 패널
 
-### 플러그인 버전 확인
+## 콘솔 패널
+
+## 파일 탐색기 패널
+
+## 플레이어 패널
+
+## 월드 패널
+
+## 설정 패널
+
+# 명령어
+
+## 터미널 권한 부여
+
+`/aterm grant <와니네 계정 ID>`
+
+특정 와니네 계정에 터미널 노드에 대한 접근 권한을 부여합니다. 이 명령어는 콘솔에서만 사용할 수 있습니다. 한번 접근 권한을 부여한 터미널 노드는 웹 페이지에서 터미널 노드를 제거하거나 서버 디렉토리의 `terminal.json` 파일을 삭제하기 전에는 다른 와니네 계정에 접근 권한을 부여할 수 없습니다.
+
+## 플러그인 버전 확인
 
 `/aterm version`
 
-### 플러그인 업데이트
+## 플러그인 업데이트
 
 `/aterm update`
 
-### 플러그인 업데이터 설정 확인 및 변경
+## 플러그인 업데이터 설정 확인 및 변경
 
 `/aterm updater (channel|automation) [args...]`
 
-현재 업데이터 채널 확인
+- 현재 업데이터 채널 확인
 
-`/aterm updater channel`
+  `/aterm updater channel`
 
-업데이터 채널을 release / dev 로 변경
+- 업데이터 채널을 release / dev 로 변경
 
-`/aterm updater channel (release|dev)`
+  `/aterm updater channel (release|dev)`
 
-현재 자동 업데이트 활성화 여부 확인
+- 현재 자동 업데이트 활성화 여부 확인
 
-`/aterm updater automation`
+  `/aterm updater automation`
 
-자동 업데이트 활성화 / 비활성화
+- 자동 업데이트 활성화 / 비활성화
 
-`/aterm updater automation (enable|disable)`
+  `/aterm updater automation (enable|disable)`
 
-### 플러그인 리로드
+## 플러그인 리로드
 
 `/aterm reload`
