@@ -28,25 +28,29 @@ TODO
 
 이 아메시 터미널 노드 플러그인은 버킷 기반의 서버에서 동작합니다. `크래프트버킷`, `스피곳`, `페이퍼` 등의 서버 프로그램과 호환됩니다. 다른 서버 프로그램을 위한 아메시 터미널이 필요한 경우 아래의 링크를 확인해보세요.
 
-- [`번지코드 서버용 아메시 터미널`](https://github.com/wnynya/Amethy-Terminal-Bungeecord)
+- [번지코드 서버용 아메시 터미널](https://github.com/wnynya/Amethy-Terminal-Bungeecord)
 
 아메시 터미널은 1.14.\* - 1.19.\* 버전의 마인크래프트 서버와 호환됩니다.<br>
 아메시 터미널 플러그인을 사용하려면 자바 버전 11 이상의 환경에서 서버를 실행해야 합니다.
 
 # 설치와 기본 설정
 
-1. 아래의 링크 혹은 [`아메시 홈페이지`](https://amethy.wany.io) 에서 플러그인의 최신 버전을 다운로드합니다.<br>
-   [`Amethy-Terminal-Bukkit.jar (클릭하여 다운로드)`](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/release/latest/Amethy-Terminal-Bukkit.jar)
+1. 아래의 링크 혹은 [아메시 홈페이지](https://amethy.wany.io) 에서 플러그인의 최신 버전을 다운로드합니다.<br>
+   [Amethy-Terminal-Bukkit.jar (클릭하여 다운로드)](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/release/latest/Amethy-Terminal-Bukkit.jar)
 
 2. `Amethy-Terminal-Bukkit.jar` 파일을 마인크래프트 서버의 `plugins` 디렉터리에 넣습니다.
 
-3. 서버를 재시작, 리로드하거나 [`Plugman`](https://www.spigotmc.org/resources/plugmanx.88135) 등의 플러그인을 이용해 아메시 터미널 플러그인을 로드합니다.
+3. 서버를 재시작, 리로드하거나 [Plugman](https://www.spigotmc.org/resources/plugmanx.88135) 등의 플러그인을 이용해 아메시 터미널 플러그인을 로드합니다.
 
 4. 서버 콘솔에 `aterm grant <와니네 계정 ID>` 명령어를 입력하여 서버 접근 권한을 부여합니다.
 
-5. [`Amethy Terminal 웹 사이트`](https://amethy.wany.io/terminal)를 방문하여 웹 터미널을 사용합니다.
+5. [Amethy Terminal 웹 사이트](https://amethy.wany.io/terminal)를 방문하여 웹 터미널을 사용합니다.
 
 # 웹 터미널 사용
+
+## 들어가기
+
+[Amethy Terminal 웹 사이트](https://amethy.wany.io/terminal)에서 계정의 터미널 노드 혹은 멤버로 추가된 터미널 노드의 목록을 확인할 수 있습니다.
 
 ## 대시보드 패널
 
@@ -74,7 +78,7 @@ TODO
 
 ## 서버 멤버 추가
 
-최초에 `aterm grant <와니네 계정 ID>` 명령어를 사용하여 권한이 부여된 계정은 터미널 노드의 마스터 계정으로 지정됩니다. 다른 계정의 터미널 접근이 필요한 경우 설정 패널에서 터미널 멤버를 추가할 수 있습니다. 터미널 맴버에게는 각 패널별 보기, 쓰기 권한을 따로 부여할 수 있습니다. 특정 패널의 쓰기 권한을 부여하기 위해서는 패널의 보기 권한이 필수적으로 부여되어야 합니다.
+최초에 `aterm grant <와니네 계정 ID>` 명령어를 사용하여 권한이 부여된 계정은 터미널 노드의 마스터 계정으로 지정됩니다. 다른 계정의 터미널 접근이 필요한 경우 [설정 패널](#설정-패널)에서 터미널 멤버를 추가할 수 있습니다. 터미널 맴버에게는 각 패널별 보기, 쓰기 권한을 따로 부여할 수 있습니다. 특정 패널의 쓰기 권한을 부여하기 위해서는 패널의 보기 권한이 필수적으로 부여되어야 합니다.
 
 | 권한             | 설명                                                                                                      | 비고                   |
 | ---------------- | --------------------------------------------------------------------------------------------------------- | ---------------------- |
@@ -93,7 +97,7 @@ TODO
 
 `/aterm grant <와니네 계정 ID>`
 
-특정 와니네 계정에 터미널 노드에 대한 접근 권한을 부여합니다. 이 명령어는 콘솔에서만 사용할 수 있습니다. 한번 접근 권한을 부여한 터미널 노드는 웹 페이지에서 터미널 노드를 제거하거나 서버 디렉토리의 `terminal.json` 파일을 삭제하기 전에는 다른 와니네 계정에 접근 권한을 부여할 수 없습니다.
+특정 와니네 계정에 터미널 노드에 대한 접근 권한을 부여합니다. 이 명령어는 콘솔에서만 사용할 수 있습니다. 한번 접근 권한을 부여한 터미널 노드는 웹 페이지에서 터미널 노드를 제거하거나 서버 디렉터리의 `terminal.json` 파일을 삭제하기 전에는 다른 와니네 계정에 접근 권한을 부여할 수 없습니다.
 
 ## 플러그인 버전 확인
 
