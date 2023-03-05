@@ -36,7 +36,7 @@ TODO
 # 설치와 기본 설정
 
 1. 아래의 링크 혹은 [아메시 홈페이지](https://amethy.wany.io) 에서 플러그인의 최신 버전을 다운로드합니다.<br>
-   [Amethy-Terminal-Bukkit.jar (클릭하여 다운로드)](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/release/latest/Amethy-Terminal-Bukkit.jar)
+   [`Amethy-Terminal-Bukkit.jar (클릭하여 다운로드)`](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/release/latest/Amethy-Terminal-Bukkit.jar)
 
 2. `Amethy-Terminal-Bukkit.jar` 파일을 마인크래프트 서버의 `plugins` 디렉터리에 넣습니다.
 
@@ -44,13 +44,13 @@ TODO
 
 4. 서버 콘솔에 `aterm grant <와니네 계정 ID>` 명령어를 입력하여 서버 접근 권한을 부여합니다.
 
-5. [Amethy Terminal 웹 사이트](https://amethy.wany.io/terminal)를 방문하여 웹 터미널을 사용합니다.
+5. [아메시 터미널 웹 사이트](https://amethy.wany.io/terminal)를 방문하여 웹 터미널을 사용합니다.
 
 # 웹 터미널 사용
 
 ## 들어가기
 
-[Amethy Terminal 웹 사이트](https://amethy.wany.io/terminal)에서 계정의 터미널 노드 혹은 멤버로 추가된 터미널 노드의 목록을 확인할 수 있습니다.
+[아메시 터미널 웹 사이트](https://amethy.wany.io/terminal)에서 계정의 터미널 노드 혹은 멤버로 추가된 터미널 노드의 목록을 확인할 수 있습니다.
 
 ## 대시보드 패널
 
