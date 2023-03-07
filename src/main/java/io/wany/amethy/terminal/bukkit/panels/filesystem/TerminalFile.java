@@ -12,8 +12,8 @@ import java.util.Base64;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import io.wany.amethy.terminal.bukkit.modules.EventEmitter;
-import io.wany.amethy.terminal.bukkit.modules.Json;
+import io.wany.amethyst.EventEmitter;
+import io.wany.amethyst.Json;
 
 public class TerminalFile extends EventEmitter {
 

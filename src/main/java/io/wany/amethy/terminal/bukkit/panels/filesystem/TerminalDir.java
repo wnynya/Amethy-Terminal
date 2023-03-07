@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import io.wany.amethy.terminal.bukkit.modules.Json;
+import io.wany.amethyst.Json;
 
 public class TerminalDir {
 

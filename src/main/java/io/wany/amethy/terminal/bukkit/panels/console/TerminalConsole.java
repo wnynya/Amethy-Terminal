@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import io.wany.amethy.terminal.bukkit.AmethyTerminal;
 import io.wany.amethy.terminal.bukkit.Console;
 import io.wany.amethy.terminal.bukkit.TerminalNode;
-import io.wany.amethy.terminal.bukkit.modules.Json;
+import io.wany.amethyst.Json;
 
 public class TerminalConsole {
 

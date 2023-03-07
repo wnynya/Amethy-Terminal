@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import io.wany.amethy.terminal.bukkit.TerminalNode;
-import io.wany.amethy.terminal.bukkit.modules.Json;
+import io.wany.amethyst.Json;
 
 public class TerminalFilesystem {
 

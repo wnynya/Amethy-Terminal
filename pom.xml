@@ -15,19 +15,27 @@
   <properties>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-    <java.version>8</java.version>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <java.version>11</java.version>
 
   </properties>
 
   <repositories>
 
+    <!-- Wanyne Amethy Repo -->
+    <repository>
+      <id>amethy</id>
+      <url>https://api.wany.io/amethy/repository/maven</url>
+    </repository>
+
+    <!-- Spigot Repo --> 
     <repository>
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
 
+    <!-- Amache Snapshots -->
     <repository>
       <id>apache.snapshots</id>
       <url>https://repository.apache.org/content/repositories/snapshots</url>
@@ -51,6 +59,13 @@
   </pluginRepositories>
 
   <dependencies>
+
+    <!-- Amethyst -->
+    <dependency>
+      <groupId>io.wany.amethyst</groupId>
+      <artifactId>Amethyst</artifactId>
+      <version>0.8.1</version>
+    </dependency>
 
     <!-- Spigot -->
     <dependency>
@@ -80,13 +95,6 @@
       <artifactId>log4j-api</artifactId>
       <version>2.17.1</version>
       <scope>provided</scope>
-    </dependency>
-
-    <!-- Google Gson (scope:complie) -->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.10.1</version>
     </dependency>
 
   </dependencies>
@@ -141,7 +149,7 @@
           <relocations>
 
             <relocation>
-              <pattern>com.google.gson</pattern>
+              <pattern>io.wany.amethyst</pattern>
             </relocation>
 
           </relocations>

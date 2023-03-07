@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 import io.wany.amethy.terminal.bukkit.AmethyTerminal;
 import io.wany.amethy.terminal.bukkit.TerminalNode;
-import io.wany.amethy.terminal.bukkit.modules.Json;
+import io.wany.amethyst.Json;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
