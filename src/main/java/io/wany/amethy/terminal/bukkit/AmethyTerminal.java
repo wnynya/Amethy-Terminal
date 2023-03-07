@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import io.wany.amethy.terminal.bukkit.commands.AmethyTerminalCommand;
 import io.wany.amethy.terminal.bukkit.commands.AmethyTerminalTabCompleter;
-import io.wany.amethy.terminal.bukkit.modules.Json;
+import io.wany.amethyst.Json;
 
 /**
  *

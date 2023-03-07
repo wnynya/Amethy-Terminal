@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 
 import io.wany.amethy.terminal.bukkit.AmethyTerminal;
 import io.wany.amethy.terminal.bukkit.TerminalNode;
-import io.wany.amethy.terminal.bukkit.modules.Json;
+import io.wany.amethyst.Json;
 
 public class TerminalWorlds {
 

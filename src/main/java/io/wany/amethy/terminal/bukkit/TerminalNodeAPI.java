@@ -5,11 +5,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
-import io.wany.amethy.terminal.bukkit.modules.Json;
-import io.wany.amethy.terminal.bukkit.modules.network.HTTPRequest;
-import io.wany.amethy.terminal.bukkit.modules.network.HTTPRequestOptions;
-import io.wany.amethy.terminal.bukkit.modules.network.HTTPRequestOptions.Method;
-import io.wany.amethy.terminal.bukkit.modules.network.HTTPRequestOptions.ResponseType;
+import io.wany.amethyst.Json;
+import io.wany.amethyst.network.HTTPRequest;
+import io.wany.amethyst.network.HTTPRequestOptions;
+import io.wany.amethyst.network.HTTPRequestOptions.Method;
+import io.wany.amethyst.network.HTTPRequestOptions.ResponseType;
 
 public class TerminalNodeAPI {
 

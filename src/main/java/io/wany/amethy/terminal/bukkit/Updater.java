@@ -14,8 +14,8 @@ import java.util.concurrent.Executors;
 
 import org.bukkit.Bukkit;
 
-import io.wany.amethy.terminal.bukkit.modules.Json;
-import io.wany.amethy.terminal.bukkit.modules.network.HTTPRequest;
+import io.wany.amethyst.Json;
+import io.wany.amethyst.network.HTTPRequest;
 
 public class Updater {
 
