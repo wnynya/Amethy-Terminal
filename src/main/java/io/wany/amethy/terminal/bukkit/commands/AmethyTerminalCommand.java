@@ -56,7 +56,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
           return true;
         }
         // 정보: 플러그인 리로드 시작
-        info(sender, "Reloading " + AmethyTerminal.NAME + " v" + AmethyTerminal.VERSION);
+        info(sender, AmethyTerminal.NAME + " v" + AmethyTerminal.VERSION + " 플러그인을 리로드합니다.");
         long s = System.currentTimeMillis();
         BukkitPluginLoader.unload();
         BukkitPluginLoader.load(AmethyTerminal.FILE);
