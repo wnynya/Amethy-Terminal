@@ -46,9 +46,6 @@ public class AmethyTerminalCommand implements CommandExecutor {
         }
         // 정보: 플러그인 버전
         info(sender, AmethyTerminal.NAME + " v" + AmethyTerminal.VERSION + " §o" + tail);
-        if (tail.equals("[업데이트 가능]") && sender instanceof Player) {
-          // Player player = (Player) sender;
-        }
         return true;
       }
 
@@ -261,11 +258,6 @@ public class AmethyTerminalCommand implements CommandExecutor {
           info(sender, "사용법: /" + label + " " + args[0] + " (channel|automation)");
           return true;
         }
-      }
-
-      case "test": {
-        Player player = (Player) sender;
-        return true;
       }
 
       default: {
