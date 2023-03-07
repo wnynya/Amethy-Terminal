@@ -96,7 +96,7 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
             }
             // amethyterminal debug ?
             if (args.length == 2) {
-              List<String> list = listOf("channel", "automation");
+              List<String> list = listOf("enable", "disable");
               return autoComplete(list, args[args.length - 1]);
             } else {
               return Collections.emptyList();
@@ -109,7 +109,7 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
             }
             int commandArgsLength = 1;
             // flags
-            List<String> flags = listOf("-silent", "-force");
+            List<String> flags = listOf("-force");
             if (args.length <= commandArgsLength + flags.size()) {
               List<String> list = new ArrayList<>(flags);
               usedFlags(args, commandArgsLength, list);
@@ -130,12 +130,12 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
             // amethyterminal updater [1] ?
             else if (args.length == 3) {
               // amethyterminal updater channel ?
-              if (args[1].toLowerCase() == "channel") {
+              if (args[1].toLowerCase().equals("channel")) {
                 List<String> list = listOf("release", "dev");
                 return autoComplete(list, args[args.length - 1]);
               }
               // amethyterminal updater automation ?
-              else if (args[1].toLowerCase() == "automation") {
+              else if (args[1].toLowerCase().equals("automation")) {
                 List<String> list = listOf("enable", "disable");
                 return autoComplete(list, args[args.length - 1]);
               } else {

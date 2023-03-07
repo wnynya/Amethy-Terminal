@@ -27,8 +27,8 @@ public class AmethyTerminal extends JavaPlugin {
 
   public static AmethyTerminal PLUGIN;
 
-  public static final String NAME = "Amethy Terminal";
-  public static final String PREFIX = "§l§x§d§2§b§0§d§d[" + NAME + "]:§r ";
+  public static final String NAME = "아메시 터미널";
+  public static final String PREFIX = "§x§d§2§b§0§d§d§l[" + NAME + "]:§r ";
   protected static final String PREFIX_CONSOLE = "[" + NAME + "] ";
   protected static final boolean ISRELOAD = Bukkit.getWorlds().size() != 0;
 
