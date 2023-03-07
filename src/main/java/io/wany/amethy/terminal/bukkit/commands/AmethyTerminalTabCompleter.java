@@ -2,6 +2,7 @@ package io.wany.amethy.terminal.bukkit.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,6 +83,9 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
           }
           if (sender.hasPermission("amethy.terminal.updater")) {
             list.add("updater");
+          }
+          if (sender instanceof ConsoleCommandSender && sender.hasPermission("amethy.terminal.grant")) {
+            list.add("grant");
           }
           return autoComplete(list, args[args.length - 1]);
         }

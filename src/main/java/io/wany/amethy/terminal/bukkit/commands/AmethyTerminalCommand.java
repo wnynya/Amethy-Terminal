@@ -231,7 +231,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
       case "grant": {
         if (!(sender instanceof CommandSender)) {
           // 오류: 콘솔 명령어로만 사용 가능
-          error(sender, "명령어를 사용할 수 있는 권한이 없습니다.");
+          error(sender, "서버 콘솔에서만 사용 가능한 명령어입니다.");
           return true;
         }
 
