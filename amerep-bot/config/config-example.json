@@ -1,0 +1,27 @@
+{
+  "type": "bukkitplugin",
+  "target": {
+    "dir": "C:/Users/Wany/Amethyst/target",
+    "name": "Amethyst-{version}.jar",
+    "delay": 2000,
+    "minkb": 300
+  },
+  "repo": {
+    "host": "api.wany.io",
+    "path": "/amethy/repository",
+    "port": "443",
+    "name": "Amethyst",
+    "key": "keyval"
+  },
+  "channels": {
+    "dev": {
+      "condition": "dev",
+      "name": "dev",
+      "version": "{version}-{timestamp:YYDDD-hhmmss}"
+    },
+    "default": {
+      "name": "release",
+      "version": "{version}"
+    }
+  }
+}
