@@ -1,6 +1,8 @@
 package io.wany.amethy.terminal.bukkit;
 
 import java.net.URI;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +27,7 @@ public class TerminalNode {
   protected static boolean DISABLED = false;
 
   private static ExecutorService onLoadExecutor = Executors.newFixedThreadPool(1);
+  private static Timer onLoadTimer = new Timer();
   private static ExecutorService onEnableExecutor = Executors.newFixedThreadPool(1);
   private static ExecutorService onDisableExecutor = Executors.newFixedThreadPool(1);
   private static EventEmitter eventEmitter = new EventEmitter();
@@ -33,7 +36,14 @@ public class TerminalNode {
     onLoadExecutor.submit(() -> {
       TerminalConsole.onLoad();
 
-      loadNode();
+      onLoadTimer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+          if (!OPENED && !DISABLED) {
+            open();
+          }
+        }
+      }, 0, 2000);
     });
   }
 
@@ -65,11 +75,9 @@ public class TerminalNode {
     });
   }
 
-  protected static void loadNode() {
+  private static void open() {
 
-    if (DISABLED) {
-      return;
-    }
+    console.log("Try Open");
 
     // API 연결 상태 확인
     if (!TerminalNodeAPI.ping()) {
@@ -77,7 +85,6 @@ public class TerminalNode {
         TimeUnit.SECONDS.sleep(1);
       } catch (InterruptedException ignored) {
       }
-      loadNode();
       return;
     }
     console.debug("API server ping checked");
@@ -92,7 +99,6 @@ public class TerminalNode {
       // 사용할 수 없는 노드이면 새 UID, KEY 발급 후 저장
       TerminalNodeAPI.newNode();
       console.debug("Issue new node");
-      loadNode();
       return;
     }
     console.debug("Node validation success");
@@ -134,7 +140,6 @@ public class TerminalNode {
       WEBSOCKET.close();
       WEBSOCKET.disable();
       console.debug("Connection Failed");
-      loadNode();
     });
 
     try {

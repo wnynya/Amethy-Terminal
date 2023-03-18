@@ -19,11 +19,13 @@ public class PluginLoader {
 
   /**
    * Unload plugin
-   * @param plugin plugin
+   * 
+   * @param plugin Plugin
    */
   public static void unload(Plugin plugin) {
     // May not be compatible with Spigot
-    String name = (AmethyTerminal.PAPERAPI) ? plugin.getDescription().getName().toLowerCase(Locale.ENGLISH) : plugin.getName();
+    String name = (AmethyTerminal.PAPERAPI) ? plugin.getDescription().getName().toLowerCase(Locale.ENGLISH)
+        : plugin.getName();
 
     // commandwrap
     PluginManager pluginManager = Bukkit.getPluginManager();
@@ -123,7 +125,7 @@ public class PluginLoader {
         else {
           try {
             Field pluginField = Arrays.stream(entry.getValue().getClass().getDeclaredFields())
-              .filter(field -> Plugin.class.isAssignableFrom(field.getType())).findFirst().orElse(null);
+                .filter(field -> Plugin.class.isAssignableFrom(field.getType())).findFirst().orElse(null);
             if (pluginField != null) {
               Plugin owningPlugin;
               try {
@@ -163,27 +165,29 @@ public class PluginLoader {
     // PaperClassLoaderStorage pcls = PaperClassLoaderStorage.instance();
     ClassLoader cl = plugin.getClass().getClassLoader();
 
-    /*if (cl instanceof ConfiguredPluginClassLoader ccl) {
-      // For Paper
-      try {
-        Field pluginField = cl.getClass().getDeclaredField("plugin");
-        pluginField.setAccessible(true);
-        pluginField.set(cl, null);
-        Field pluginInitField = cl.getClass().getDeclaredField("pluginInit");
-        pluginInitField.setAccessible(true);
-        pluginInitField.set(cl, null);
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
-
-      try {
-        ((URLClassLoader) cl).close();
-        System.gc();
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
-
-    } else */
+    /*
+     * if (cl instanceof ConfiguredPluginClassLoader ccl) {
+     * // For Paper
+     * try {
+     * Field pluginField = cl.getClass().getDeclaredField("plugin");
+     * pluginField.setAccessible(true);
+     * pluginField.set(cl, null);
+     * Field pluginInitField = cl.getClass().getDeclaredField("pluginInit");
+     * pluginInitField.setAccessible(true);
+     * pluginInitField.set(cl, null);
+     * } catch (Exception ex) {
+     * ex.printStackTrace();
+     * }
+     * 
+     * try {
+     * ((URLClassLoader) cl).close();
+     * System.gc();
+     * } catch (Exception ex) {
+     * ex.printStackTrace();
+     * }
+     * 
+     * } else
+     */
 
     if (cl instanceof URLClassLoader) {
       try {
@@ -208,6 +212,11 @@ public class PluginLoader {
 
   // For Paper, bootstrapper will inhibit plugin from loading
   // For Paper, paper-plugin.yml will inhibit plugin from loading at runtime
+  /**
+   * Load plugin
+   * 
+   * @param file Plugin file
+   */
   public static void load(File file) {
     Plugin plugin = null;
     if (!file.isFile()) {
@@ -224,7 +233,6 @@ public class PluginLoader {
       return;
     }
 
-    plugin.onLoad();
     Bukkit.getPluginManager().enablePlugin(plugin);
   }
 
