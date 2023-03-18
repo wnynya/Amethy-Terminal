@@ -42,6 +42,7 @@ public class AmethyTerminal extends JavaPlugin {
   protected static String KEY = "";
   private static int JAVA_VERSION;
   private static boolean DISABLED = false;
+  public static boolean PAPERAPI;
 
   @Override
   public void onLoad() {
@@ -77,6 +78,9 @@ public class AmethyTerminal extends JavaPlugin {
       return;
     }
 
+    String version = Bukkit.getServer().getVersion().toLowerCase();
+    PAPERAPI = version.contains("paper") || version.contains("pufferfish");
+
     TerminalNode.onLoad();
 
   }
@@ -85,8 +89,8 @@ public class AmethyTerminal extends JavaPlugin {
   public void onEnable() {
 
     if (DISABLED) {
-      Console.error("Plugin requires Java version >= 11 to run. Disable plugin.");
-      BukkitPluginLoader.unload();
+      console.error("Plugin requires Java version >= 11 to run. Disable plugin.");
+      PluginLoader.unload(PLUGIN);
       return;
     }
 

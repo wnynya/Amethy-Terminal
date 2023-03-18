@@ -80,7 +80,7 @@ public class TerminalNode {
       loadNode();
       return;
     }
-    Console.debug("API server ping checked");
+    console.debug("API server ping checked");
 
     // 저장된 UID, KEY 가져오기
     AmethyTerminal.UID = AmethyTerminal.CONFIG.getString("uid");
@@ -88,14 +88,14 @@ public class TerminalNode {
 
     // 사용 가능한 노드인지 확인
     if (!TerminalNodeAPI.isValidNode()) {
-      Console.debug("Node validation failed");
+      console.debug("Node validation failed");
       // 사용할 수 없는 노드이면 새 UID, KEY 발급 후 저장
       TerminalNodeAPI.newNode();
-      Console.debug("Issue new node");
+      console.debug("Issue new node");
       loadNode();
       return;
     }
-    Console.debug("Node validation success");
+    console.debug("Node validation success");
 
     // 웹소켓 연결 설정
     WebSocketClientOptions options = new WebSocketClientOptions();
@@ -111,7 +111,7 @@ public class TerminalNode {
     // 연결 수립
     WEBSOCKET.on("open", (args) -> {
       OPENED = true;
-      Console.debug("Connection opened");
+      console.debug("Connection opened");
 
       TerminalDashboard.sendSystemInfo();
     });
@@ -126,14 +126,14 @@ public class TerminalNode {
     // 연결 종료
     WEBSOCKET.on("close", (args) -> {
       OPENED = false;
-      Console.debug("Connection closed");
+      console.debug("Connection closed");
     });
 
     // 연결 실패
     WEBSOCKET.on("failed", (args) -> {
       WEBSOCKET.close();
       WEBSOCKET.disable();
-      Console.debug("Connection Failed");
+      console.debug("Connection Failed");
       loadNode();
     });
 
@@ -145,7 +145,7 @@ public class TerminalNode {
   }
 
   public static void on(String event, BiConsumer<Json, Json> callback) {
-    Console.debug("Event listener registered: " + event);
+    console.debug("Event listener registered: " + event);
     eventEmitter.on(event, (args) -> {
       Json object = (Json) args[0];
       Json client = object.get("client");

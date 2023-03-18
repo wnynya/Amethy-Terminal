@@ -6,10 +6,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.wany.amethy.terminal.bukkit</groupId>
-  <artifactId>Amethy-Terminal</artifactId>
-  <version>1.0.0</version>
+  <artifactId>Amethy-Terminal-Bukkit</artifactId>
+  <version>1.0.1-dev</version>
 
-  <name>Amethy-Terminal</name>
+  <name>Amethy-Terminal-Bukkit</name>
   <url>https://amethy.wany.io</url>
 
   <properties>
@@ -23,51 +23,30 @@
 
   <repositories>
 
-    <!-- Wanyne Amethy Repo -->
+    <!-- repo:wanyneamethy -->
     <repository>
       <id>amethy</id>
       <url>https://api.wany.io/amethy/repository/maven</url>
     </repository>
 
-    <!-- Spigot Repo --> 
+    <!-- repo:spigot -->
     <repository>
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
 
-    <!-- Amache Snapshots -->
-    <repository>
-      <id>apache.snapshots</id>
-      <url>https://repository.apache.org/content/repositories/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-
   </repositories>
-
-  <pluginRepositories>
-
-    <pluginRepository>
-      <id>maven-snapshots</id>
-      <url>https://repository.apache.org/content/repositories/snapshots/</url>
-    </pluginRepository>
-
-  </pluginRepositories>
 
   <dependencies>
 
-    <!-- Amethyst -->
+    <!-- Amethyst (repo:wanyneamethy) -->
     <dependency>
       <groupId>io.wany.amethyst</groupId>
       <artifactId>Amethyst</artifactId>
-      <version>0.8.1</version>
+      <version>0.8.2</version>
     </dependency>
 
-    <!-- Spigot -->
+    <!-- Spigot (repo:spigot) -->
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
@@ -75,7 +54,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Apache Commons -->
+    <!-- Apache Commons (repo:mavencentral) -->
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -83,7 +62,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Apache Log4j -->
+    <!-- Apache Log4j (repo:mavencentral) -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
@@ -97,23 +76,18 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Adventure API (repo:mavencentral) -->
+    <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-api</artifactId>
+      <version>4.12.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>
 
     <plugins>
-
-      <plugin>
-
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.0</version>
-
-        <configuration>
-          <outputDirectory>packages</outputDirectory>
-        </configuration>
-
-      </plugin>
 
       <plugin>
 
@@ -150,6 +124,10 @@
 
             <relocation>
               <pattern>io.wany.amethyst</pattern>
+            </relocation>
+
+            <relocation>
+              <pattern>net.kyori.adventure</pattern>
             </relocation>
 
           </relocations>

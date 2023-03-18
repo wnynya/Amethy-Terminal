@@ -8,7 +8,7 @@ import org.apache.logging.log4j.core.Logger;
 import org.bukkit.Bukkit;
 
 import io.wany.amethy.terminal.bukkit.AmethyTerminal;
-import io.wany.amethy.terminal.bukkit.Console;
+import io.wany.amethy.terminal.bukkit.console;
 import io.wany.amethy.terminal.bukkit.TerminalNode;
 import io.wany.amethyst.Json;
 
@@ -21,14 +21,14 @@ public class TerminalConsole {
     Logger logger = (Logger) LogManager.getRootLogger();
     logFilter = new TerminalConsoleLogFilter();
     logger.addFilter(logFilter);
-    Console.debug("Log4j LogFilter enabled");
+    console.debug("Log4j LogFilter enabled");
 
     addEventListener();
   }
 
   public static void onDisable() {
     logFilter.disable();
-    Console.debug("Log4j LogFilter disabled");
+    console.debug("Log4j LogFilter disabled");
   }
 
   public static void addEventListener() {

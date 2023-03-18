@@ -4,10 +4,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Console {
+public class console {
 
   private static void log(Level level, String message) {
-    Logger logger = (Logger) LogManager.getRootLogger();
+    Logger logger = LogManager.getRootLogger();
     logger.log(level, message, message, message);
   }
 
