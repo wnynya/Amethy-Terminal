@@ -1,11 +1,12 @@
 package io.wany.amethy.terminal.bukkit.modules;
 
-import io.wany.amethy.terminal.bukkit.Message;
 import io.wany.amethy.terminal.bukkit.console;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
-public class BukkitMessage implements Message {
+public class SpigotMessage implements Message {
 
   @Override
   public Object of(Object... objects) {
@@ -19,6 +20,19 @@ public class BukkitMessage implements Message {
       }
     }
     return builder.toString();
+  }
+
+  @Override
+  public String stringify(Object object) {
+    if (!(object instanceof BaseComponent[])) {
+      throw new IllegalArgumentException("object must instanceof BaseComponent[]");
+    }
+    return ComponentSerializer.toString(object);
+  }
+
+  @Override
+  public Object parse(String string) {
+    return ComponentSerializer.parse(string);
   }
 
   @Override

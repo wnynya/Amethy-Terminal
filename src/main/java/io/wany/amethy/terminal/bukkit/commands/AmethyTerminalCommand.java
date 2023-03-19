@@ -1,6 +1,9 @@
 package io.wany.amethy.terminal.bukkit.commands;
 
 import io.wany.amethy.terminal.bukkit.*;
+import io.wany.amethy.terminal.bukkit.modules.Message;
+import io.wany.amethy.terminal.bukkit.modules.PluginLoader;
+import io.wany.amethy.terminal.bukkit.modules.Updater;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,7 +65,6 @@ public class AmethyTerminalCommand implements CommandExecutor {
           console.log(aaa.toString());
 
           sto.getClass().getDeclaredField("providers");
-
         }
         catch (Throwable t) {
           t.printStackTrace();
@@ -324,7 +326,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
       default: {
         // 오류 알 수 없는 args[0]
         error(sender, Message.ERROR.UNKNOWN_ARG);
-        info(sender, "사용법: /" + label + " (version|reload|debug|update|updater)");
+        info(sender, "사용법: /" + label + " (version|reload|debug|update|updater|grant)");
         return true;
       }
 

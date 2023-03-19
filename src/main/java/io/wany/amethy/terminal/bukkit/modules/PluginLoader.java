@@ -1,5 +1,6 @@
-package io.wany.amethy.terminal.bukkit;
+package io.wany.amethy.terminal.bukkit.modules;
 
+import io.wany.amethy.terminal.bukkit.AmethyTerminal;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommand;
@@ -246,7 +247,4 @@ public class PluginLoader {
     Bukkit.getPluginManager().enablePlugin(plugin);
   }
 
-  public static void download(File file, URL url) {
-
-  }
 }

@@ -1,5 +1,7 @@
-package io.wany.amethy.terminal.bukkit;
+package io.wany.amethy.terminal.bukkit.modules;
 
+import io.wany.amethy.terminal.bukkit.AmethyTerminal;
+import io.wany.amethy.terminal.bukkit.console;
 import io.wany.amethyst.Json;
 import io.wany.amethyst.network.HTTPRequest;
 import org.bukkit.Bukkit;
@@ -32,7 +34,7 @@ public class Updater {
   private static File PLUGINS_DIR;
   private static String VERSION;
 
-  protected static void onEnable() {
+  public static void onEnable() {
 
     PLUGIN = AmethyTerminal.PLUGIN;
     FILE = AmethyTerminal.FILE;
@@ -66,7 +68,7 @@ public class Updater {
     }), 5000, 2000));
   }
 
-  protected static void onDisable() {
+  public static void onDisable() {
     // 업데이터 자동화 체커 종료
     onEnableTimer.cancel();
     onEnableExecutor.shutdown();

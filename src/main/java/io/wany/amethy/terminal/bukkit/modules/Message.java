@@ -1,8 +1,12 @@
-package io.wany.amethy.terminal.bukkit;
+package io.wany.amethy.terminal.bukkit.modules;
 
 public interface Message {
 
   Object of(Object... objects);
+
+  String stringify(Object object);
+
+  Object parse(String string);
 
   void send(Object audience, String a1, String a2, Object... o);
 

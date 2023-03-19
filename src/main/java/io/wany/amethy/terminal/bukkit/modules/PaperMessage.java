@@ -1,9 +1,9 @@
 package io.wany.amethy.terminal.bukkit.modules;
 
-import io.wany.amethy.terminal.bukkit.Message;
 import io.wany.amethy.terminal.bukkit.console;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.command.ConsoleCommandSender;
 
@@ -25,6 +25,19 @@ public class PaperMessage implements Message {
       }
     }
     return component;
+  }
+
+  @Override
+  public String stringify(Object object) {
+    if (!(object instanceof Component)) {
+      throw new IllegalArgumentException("object must instanceof Component");
+    }
+    return GsonComponentSerializer.gson().serialize((Component) object);
+  }
+
+  @Override
+  public Object parse(String string) {
+    return GsonComponentSerializer.gson().deserialize(string);
   }
 
   @Override

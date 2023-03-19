@@ -3,8 +3,7 @@ package io.wany.amethy.terminal.bukkit;
 import io.wany.amethy.terminal.bukkit.commands.AmethyTerminalCommand;
 import io.wany.amethy.terminal.bukkit.commands.AmethyTerminalTabCompleter;
 import io.wany.amethy.terminal.bukkit.listeners.PlayerCommandPreprocess;
-import io.wany.amethy.terminal.bukkit.modules.BukkitMessage;
-import io.wany.amethy.terminal.bukkit.modules.PaperMessage;
+import io.wany.amethy.terminal.bukkit.modules.*;
 import io.wany.amethyst.Json;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -52,8 +51,6 @@ public class AmethyTerminal extends JavaPlugin {
       return;
     }
 
-    console.debug("onload");
-
     PLUGIN = this;
 
     VERSION = PLUGIN.getDescription().getVersion();
@@ -90,7 +87,7 @@ public class AmethyTerminal extends JavaPlugin {
     String version = Bukkit.getServer().getVersion().toLowerCase();
     PAPERAPI = version.contains("paper") || version.contains("purpur") || version.contains("pufferfish");
 
-    MESSAGE = PAPERAPI ? new PaperMessage() : new BukkitMessage();
+    MESSAGE = PAPERAPI ? new PaperMessage() : new SpigotMessage();
 
     TerminalNode.onLoad();
 
