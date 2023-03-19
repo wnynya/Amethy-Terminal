@@ -42,7 +42,7 @@ public class AmethyTerminal extends JavaPlugin {
   private static int JAVA_VERSION;
   private static boolean DISABLED = false;
   public static boolean PAPERAPI;
-  public static Message MESSAGE;
+  public static ServerMessage MESSAGE;
 
   @Override
   public void onLoad() {

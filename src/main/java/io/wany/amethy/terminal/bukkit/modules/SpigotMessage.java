@@ -6,7 +6,11 @@ import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
-public class SpigotMessage implements Message {
+public class SpigotMessage implements ServerMessage {
+
+  private static SpigotMessage THIS;
+
+  public SpigotMessage() { THIS = this; }
 
   @Override
   public Object of(Object... objects) {

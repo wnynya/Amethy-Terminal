@@ -7,7 +7,11 @@ import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.command.ConsoleCommandSender;
 
-public class PaperMessage implements Message {
+public class PaperMessage implements ServerMessage {
+
+  private static PaperMessage THIS;
+
+  public PaperMessage() { THIS = this; }
 
   @Override
   public Object of(Object... objects) {

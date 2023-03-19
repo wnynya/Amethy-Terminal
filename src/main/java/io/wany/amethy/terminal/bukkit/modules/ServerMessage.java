@@ -1,6 +1,6 @@
 package io.wany.amethy.terminal.bukkit.modules;
 
-public interface Message {
+public interface ServerMessage {
 
   Object of(Object... objects);
 
