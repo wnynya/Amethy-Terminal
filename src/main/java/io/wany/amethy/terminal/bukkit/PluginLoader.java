@@ -11,6 +11,7 @@ import org.bukkit.plugin.RegisteredListener;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
 
@@ -19,17 +20,15 @@ public class PluginLoader {
 
   /**
    * Unload plugin
-   * 
+   *
    * @param plugin Plugin
    */
   public static void unload(Plugin plugin) {
-    // May not be compatible with Spigot
-    String name = (AmethyTerminal.PAPERAPI) ? plugin.getDescription().getName().toLowerCase(Locale.ENGLISH)
-        : plugin.getName();
 
     // commandwrap
     PluginManager pluginManager = Bukkit.getPluginManager();
     SimpleCommandMap commandMap = null;
+    List<Plugin> bukkitPlugins = null;
     List<Plugin> plugins = null;
     Map<String, Plugin> names = null;
     Map<String, Command> commands = null;
@@ -45,6 +44,10 @@ public class PluginLoader {
 
         // When using Paper API
         if (AmethyTerminal.PAPERAPI) {
+          Field bukkitPluginsField = pluginManager.getClass().getDeclaredField("plugins");
+          bukkitPluginsField.setAccessible(true);
+          bukkitPlugins = (List<Plugin>) bukkitPluginsField.get(pluginManager);
+
           // For Paper, PaperPluginManagerImpl implements PluginManager
           // todo inject listeners (perhaps PaperEventManager does the thing)
           Field paperPluginManagerField = Bukkit.getPluginManager().getClass().getDeclaredField("paperPluginManager");
@@ -71,6 +74,7 @@ public class PluginLoader {
           commandMap = (SimpleCommandMap) commandMapField.get(instanceManager);
           commands = (Map<String, Command>) knownCommandsField.get(commandMap);
         }
+
         // When using Bukkit (Spigot) API
         else {
           // For Spigot, SimplePluginManager implements PluginManager
@@ -85,7 +89,8 @@ public class PluginLoader {
             Field listenersField = Bukkit.getPluginManager().getClass().getDeclaredField("listeners");
             listenersField.setAccessible(true);
             listeners = (Map<Event, SortedSet<RegisteredListener>>) listenersField.get(pluginManager);
-          } catch (Exception e) {
+          }
+          catch (Exception e) {
             reloadlisteners = false;
           }
           Field commandMapField = Bukkit.getPluginManager().getClass().getDeclaredField("commandMap");
@@ -95,7 +100,9 @@ public class PluginLoader {
           knownCommandsField.setAccessible(true);
           commands = (Map<String, Command>) knownCommandsField.get(commandMap);
         }
-      } catch (Exception e) {
+
+      }
+      catch (Exception e) {
         e.printStackTrace();
       }
 
@@ -111,7 +118,7 @@ public class PluginLoader {
     // Remove commands
     if (commandMap != null) {
 
-      for (Iterator<Map.Entry<String, Command>> it = commands.entrySet().iterator(); it.hasNext();) {
+      for (Iterator<Map.Entry<String, Command>> it = commands.entrySet().iterator(); it.hasNext(); ) {
         Map.Entry<String, Command> entry = it.next();
 
         if (entry.getValue() instanceof PluginCommand) {
@@ -124,8 +131,7 @@ public class PluginLoader {
 
         else {
           try {
-            Field pluginField = Arrays.stream(entry.getValue().getClass().getDeclaredFields())
-                .filter(field -> Plugin.class.isAssignableFrom(field.getType())).findFirst().orElse(null);
+            Field pluginField = Arrays.stream(entry.getValue().getClass().getDeclaredFields()).filter(field -> Plugin.class.isAssignableFrom(field.getType())).findFirst().orElse(null);
             if (pluginField != null) {
               Plugin owningPlugin;
               try {
@@ -135,11 +141,13 @@ public class PluginLoader {
                   entry.getValue().unregister(commandMap);
                   it.remove();
                 }
-              } catch (Exception e) {
+              }
+              catch (Exception e) {
                 e.printStackTrace();
               }
             }
-          } catch (Exception e) {
+          }
+          catch (Exception e) {
             e.printStackTrace();
             if (e.getMessage().equalsIgnoreCase("zip file closed")) {
               entry.getValue().unregister(commandMap);
@@ -154,10 +162,16 @@ public class PluginLoader {
 
     // Remove plugin
     if (plugins != null && plugins.contains(plugin)) {
+      console.debug("remove plugin");
       plugins.remove(plugin);
     }
 
+    console.debug(Arrays.toString(plugins.toArray()));
+
+    console.debug(Arrays.toString(Bukkit.getPluginManager().getPlugins()));
+
     // Remove name
+    String name = (AmethyTerminal.PAPERAPI) ? plugin.getPluginMeta().getName().toLowerCase(Locale.ENGLISH) : plugin.getName();
     if (names != null && names.containsKey(name)) {
       names.remove(name);
     }
@@ -178,14 +192,14 @@ public class PluginLoader {
      * } catch (Exception ex) {
      * ex.printStackTrace();
      * }
-     * 
+     *
      * try {
      * ((URLClassLoader) cl).close();
      * System.gc();
      * } catch (Exception ex) {
      * ex.printStackTrace();
      * }
-     * 
+     *
      * } else
      */
 
@@ -197,12 +211,14 @@ public class PluginLoader {
         Field pluginInitField = cl.getClass().getDeclaredField("pluginInit");
         pluginInitField.setAccessible(true);
         pluginInitField.set(cl, null);
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         ex.printStackTrace();
       }
       try {
         ((URLClassLoader) cl).close();
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         ex.printStackTrace();
       }
     }
@@ -210,13 +226,13 @@ public class PluginLoader {
     System.gc();
   }
 
-  // For Paper, bootstrapper will inhibit plugin from loading
-  // For Paper, paper-plugin.yml will inhibit plugin from loading at runtime
   /**
    * Load plugin
-   * 
+   *
    * @param file Plugin file
    */
+  // For Paper, bootstrapper will inhibit plugin from loading
+  // For Paper, paper-plugin.yml will inhibit plugin from loading at runtime
   public static void load(File file) {
     Plugin plugin = null;
     if (!file.isFile()) {
@@ -226,14 +242,23 @@ public class PluginLoader {
     try {
       file.setReadable(true);
       plugin = Bukkit.getPluginManager().loadPlugin(file);
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       e.printStackTrace();
     }
+
     if (plugin == null) {
       return;
     }
 
+    plugin.onLoad();
+
     Bukkit.getPluginManager().enablePlugin(plugin);
+
+    console.debug(Arrays.toString(Bukkit.getPluginManager().getPlugins()));
   }
 
+  public static void download(File file, URL url) {
+
+  }
 }

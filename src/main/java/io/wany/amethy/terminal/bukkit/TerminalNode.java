@@ -26,11 +26,11 @@ public class TerminalNode {
   protected static boolean OPENED = false;
   protected static boolean DISABLED = false;
 
-  private static ExecutorService onLoadExecutor = Executors.newFixedThreadPool(1);
-  private static Timer onLoadTimer = new Timer();
-  private static ExecutorService onEnableExecutor = Executors.newFixedThreadPool(1);
-  private static ExecutorService onDisableExecutor = Executors.newFixedThreadPool(1);
-  private static EventEmitter eventEmitter = new EventEmitter();
+  private static final ExecutorService onLoadExecutor = Executors.newFixedThreadPool(1);
+  private static final Timer onLoadTimer = new Timer();
+  private static final ExecutorService onEnableExecutor = Executors.newFixedThreadPool(1);
+  private static final ExecutorService onDisableExecutor = Executors.newFixedThreadPool(1);
+  private static final EventEmitter eventEmitter = new EventEmitter();
 
   protected static void onLoad() {
     onLoadExecutor.submit(() -> {
@@ -76,8 +76,9 @@ public class TerminalNode {
   }
 
   private static void open() {
-
-    console.log("Try Open");
+    if (OPENED || DISABLED) {
+      return;
+    }
 
     // API 연결 상태 확인
     if (!TerminalNodeAPI.ping()) {

@@ -29,3 +29,8 @@ commands:
     permission: amethy.terminal.command.amethyterminal
     usage: 'Usage: /<command> (version|reload|debug|update|updater)'
     aliases: [at, aterm]
+
+  plugins:
+    description: Gets a list of plugins running on the server
+    usage: '/plugins'
+    aliases: [ pl ]

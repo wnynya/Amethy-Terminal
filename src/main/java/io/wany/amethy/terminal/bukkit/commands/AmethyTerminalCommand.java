@@ -1,19 +1,18 @@
 package io.wany.amethy.terminal.bukkit.commands;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import io.wany.amethy.terminal.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import io.wany.amethy.terminal.bukkit.AmethyTerminal;
-import io.wany.amethy.terminal.bukkit.Message;
-import io.wany.amethy.terminal.bukkit.TerminalNodeAPI;
-import io.wany.amethy.terminal.bukkit.Updater;
-import io.wany.amethy.terminal.bukkit.PluginLoader;
 
 public class AmethyTerminalCommand implements CommandExecutor {
 
@@ -21,17 +20,60 @@ public class AmethyTerminalCommand implements CommandExecutor {
 
     if (args.length == 0) {
       // 오류: args[0] 필요
-      error(sender, "명령어 인자가 부족합니다.");
+      error(sender, Message.ERROR.INSUFFICIENT_ARGS);
       info(sender, "사용법: /" + label + " (version|reload|debug|update|updater)");
       return true;
     }
 
     switch (args[0].toLowerCase()) {
 
+      case "test": {
+        try {
+          Class<?> c = Class.forName("io.papermc.paper.plugin.entrypoint.LaunchEntryPointHandler");
+          Field ins = c.getField("INSTANCE");
+          ins.setAccessible(true);
+          Field f = c.getDeclaredField("storage");
+          f.setAccessible(true);
+          Object o = f.get(ins.get(null));
+
+          HashMap<?, ?> w = (HashMap<?, ?>) o;
+
+          Class<?> simple = Class.forName("io.papermc.paper.plugin.storage.SimpleProviderStorage");
+
+          Object sto = null;
+          List<Object> set = Collections.singletonList(w.entrySet());
+          for (int i = 0; i < set.size(); i++) {
+            Object value = set.get(i);
+            if (value.toString().contains("SimpleProviderStorage")) {
+              sto = value;
+              break;
+            }
+          }
+
+          if (sto == null ){
+            console.log("sto null");
+            return true;
+          }
+
+          console.log(sto.getClass().getName());
+
+          Object aaa = simple.cast(sto);
+
+          console.log(aaa.toString());
+
+          sto.getClass().getDeclaredField("providers");
+
+        } catch (Throwable t) {
+          t.printStackTrace();
+        }
+        return true;
+      }
+
+      // 플러그인 버전 확인
       case "version": {
         if (!sender.hasPermission("amethy.terminal.version")) {
           // 오류: 권한 없음
-          error(sender, "명령어를 사용할 수 있는 권한이 없습니다.");
+          error(sender, Message.ERROR.NO_PERM);
           return true;
         }
         String tail;
@@ -49,10 +91,11 @@ public class AmethyTerminalCommand implements CommandExecutor {
         return true;
       }
 
+      // 플러그인 리로드
       case "reload": {
         if (!sender.hasPermission("amethy.terminal.reload")) {
           // 오류: 권한 없음
-          error(sender, "명령어를 사용할 수 있는 권한이 없습니다.");
+          error(sender, Message.ERROR.NO_PERM);
           return true;
         }
         // 정보: 플러그인 리로드 시작
@@ -66,10 +109,11 @@ public class AmethyTerminalCommand implements CommandExecutor {
         return true;
       }
 
+      // 플러그인 디버그 메시지 설정
       case "debug": {
         if (!sender.hasPermission("amethy.terminal.debug")) {
           // 오류: 권한 없음
-          error(sender, "명령어를 사용할 수 있는 권한이 없습니다.");
+          error(sender, Message.ERROR.NO_PERM);
           return true;
         }
         boolean next = AmethyTerminal.DEBUG;
@@ -80,7 +124,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
             next = false;
           } else {
             // 오류: 알 수 없는 args[1]
-            error(sender, "알 수 없는 명령어 인자입니다.");
+            error(sender, Message.ERROR.UNKNOWN_ARG);
             info(sender, "사용법: /" + label + " " + args[0] + " (enable|disable)");
             return true;
           }
@@ -95,10 +139,11 @@ public class AmethyTerminalCommand implements CommandExecutor {
         return true;
       }
 
+      // 플러그인 업데이트
       case "update": {
         if (!sender.hasPermission("amethy.terminal.updater.update")) {
           // 오류: 권한 없음
-          error(sender, "명령어를 사용할 수 있는 권한이 없습니다.");
+          error(sender, Message.ERROR.NO_PERM);
           return true;
         }
         ExecutorService executor = Executors.newFixedThreadPool(1);
@@ -158,10 +203,11 @@ public class AmethyTerminalCommand implements CommandExecutor {
         return true;
       }
 
+      // 플러그인 업데이터 설정
       case "updater": {
         if (!sender.hasPermission("amethy.terminal.updater")) {
           // 오류: 권한 없음
-          error(sender, "명령어를 사용할 수 있는 권한이 없습니다.");
+          error(sender, Message.ERROR.NO_PERM);
           return true;
         }
 
@@ -175,7 +221,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
                 next = false;
               } else {
                 // 오류: 알 수 없는 args[2]
-                error(sender, "알 수 없는 명령어 인자입니다.");
+                error(sender, Message.ERROR.UNKNOWN_ARG);
                 info(sender, "사용법: /" + label + " " + args[0] + " " + args[1] + " [enable|disable]");
                 return true;
               }
@@ -197,7 +243,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
                 next = "dev";
               } else {
                 // 오류: 알 수 없는 args[2]
-                error(sender, "알 수 없는 명령어 인자입니다.");
+                error(sender, Message.ERROR.UNKNOWN_ARG);
                 info(sender, "사용법: /" + label + " " + args[0] + " " + args[1] + " [release|dev]");
                 return true;
               }
@@ -212,28 +258,29 @@ public class AmethyTerminalCommand implements CommandExecutor {
             return true;
           } else {
             // 오류: 알 수 없는 args[1]
-            error(sender, "알 수 없는 명령어 인자입니다.");
+            error(sender, Message.ERROR.UNKNOWN_ARG);
             info(sender, "사용법: /" + label + " " + args[0] + " (channel|automation)");
             return true;
           }
         } else {
           // 오류: args[1] 필요
-          error(sender, "명령어 인자가 부족합니다.");
+          error(sender, Message.ERROR.INSUFFICIENT_ARGS);
           info(sender, "사용법: /" + label + " " + args[0] + " (channel|automation)");
           return true;
         }
       }
 
+      // 터미널 권한 부여
       case "grant": {
         if (!(sender instanceof Player)) {
           // 오류: 콘솔 명령어로만 사용 가능
-          error(sender, "서버 콘솔에서만 사용 가능한 명령어입니다.");
+          error(sender, Message.ERROR.ONLY_CONSOLE);
           return true;
         }
 
         if (!sender.hasPermission("amethy.terminal.grant")) {
           // 오류: 권한 없음
-          error(sender, "명령어를 사용할 수 있는 권한이 없습니다.");
+          error(sender, Message.ERROR.NO_PERM);
           return true;
         }
 
@@ -248,7 +295,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
           }
         } else {
           // 오류: args[1] 필요
-          error(sender, "명령어 인자가 부족합니다.");
+          error(sender, Message.ERROR.INSUFFICIENT_ARGS);
           info(sender, "사용법: /" + label + " " + args[0] + " (channel|automation)");
         }
         return true;
@@ -256,7 +303,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
 
       default: {
         // 오류 알 수 없는 args[0]
-        error(sender, "알 수 없는 명령어 인자입니다.");
+        error(sender, Message.ERROR.UNKNOWN_ARG);
         info(sender, "사용법: /" + label + " (version|reload|debug|update|updater)");
         return true;
       }
@@ -266,15 +313,15 @@ public class AmethyTerminalCommand implements CommandExecutor {
   }
 
   public void info(CommandSender sender, Object... objects) {
-    Message.info(sender, AmethyTerminal.PREFIX, objects);
+    AmethyTerminal.MESSAGE.info(sender, AmethyTerminal.PREFIX, objects);
   }
 
   public void warn(CommandSender sender, Object... objects) {
-    Message.warn(sender, AmethyTerminal.PREFIX, objects);
+    AmethyTerminal.MESSAGE.warn(sender, AmethyTerminal.PREFIX, objects);
   }
 
   public void error(CommandSender sender, Object... objects) {
-    Message.error(sender, AmethyTerminal.PREFIX, objects);
+    AmethyTerminal.MESSAGE.error(sender, AmethyTerminal.PREFIX, objects);
   }
 
 }

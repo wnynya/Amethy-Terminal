@@ -116,7 +116,14 @@ repackages.bukkitplugin = async (target, data) => {
 
   return await new Promise((resolve) => {
     pkg
-      .generateNodeStream({ streamFiles: true })
+      .generateNodeStream({
+        type: 'nodebuffer',
+        compression: 'DEFLATE',
+        compressionOptions: {
+          level: 9,
+        },
+        streamFiles: true,
+      })
       .pipe(fs.createWriteStream(p))
       .on('finish', () => {
         resolve(p);
@@ -155,6 +162,10 @@ repackages.paperplugin = async (target, data) => {
 async function run(target) {
   console.log('패키지 파일을 찾았습니다: ' + target.file);
 
+  console.log(
+    '패키지 파일 크가: ' + fs.statSync(target.path).size / 1024 + ' KB'
+  );
+
   const data = parse(target);
 
   console.log('파싱된 버전:');
@@ -166,6 +177,9 @@ async function run(target) {
   if (repackages[config.type]) {
     repackage = await repackages[config.type](target, data);
     console.log('리패키지 파일이 생성되었습니다.');
+    console.log(
+      '리패키지 파일 크가: ' + fs.statSync(repackage).size / 1024 + ' KB'
+    );
   }
 
   await post({
@@ -198,7 +212,10 @@ setInterval(() => {
     return;
   }
   running = true;
-  const target = find();
+  let target;
+  try {
+    target = find();
+  } catch (error) {}
   if (target) {
     setTimeout(() => {
       run(target)

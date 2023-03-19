@@ -2,6 +2,9 @@ package io.wany.amethy.terminal.bukkit;
 
 import java.io.File;
 
+import io.wany.amethy.terminal.bukkit.listeners.PlayerCommandPreprocess;
+import io.wany.amethy.terminal.bukkit.modules.BukkitMessage;
+import io.wany.amethy.terminal.bukkit.modules.PaperMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -19,7 +22,7 @@ import io.wany.amethyst.Json;
  * Amethy Terminal (Bukkit)
  * https://amethy.wany.io
  * https://github.com/wnynya/Amethy-Terminal
- * 
+ * <p></p>
  * ©2023 Wany <sung@wany.io> (https://wany.io)
  *
  */
@@ -43,9 +46,16 @@ public class AmethyTerminal extends JavaPlugin {
   private static int JAVA_VERSION;
   private static boolean DISABLED = false;
   public static boolean PAPERAPI;
+  public static Message MESSAGE;
 
   @Override
   public void onLoad() {
+
+    if (PLUGIN != null) {
+      return;
+    }
+
+    console.debug("onload");
 
     PLUGIN = this;
 
@@ -79,7 +89,9 @@ public class AmethyTerminal extends JavaPlugin {
     }
 
     String version = Bukkit.getServer().getVersion().toLowerCase();
-    PAPERAPI = version.contains("paper") || version.contains("pufferfish");
+    PAPERAPI = version.contains("paper") || version.contains("purpur") || version.contains("pufferfish");
+
+    MESSAGE = PAPERAPI ? new PaperMessage() : new BukkitMessage();
 
     TerminalNode.onLoad();
 
@@ -99,6 +111,10 @@ public class AmethyTerminal extends JavaPlugin {
     TerminalNode.onEnable();
 
     Updater.onEnable();
+
+    if (PAPERAPI) {
+      registerEvent(new PlayerCommandPreprocess());
+    }
 
   }
 
