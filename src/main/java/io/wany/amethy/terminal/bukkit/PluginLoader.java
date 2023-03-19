@@ -28,7 +28,6 @@ public class PluginLoader {
     // commandwrap
     PluginManager pluginManager = Bukkit.getPluginManager();
     SimpleCommandMap commandMap = null;
-    List<Plugin> bukkitPlugins = null;
     List<Plugin> plugins = null;
     Map<String, Plugin> names = null;
     Map<String, Command> commands = null;
@@ -44,10 +43,6 @@ public class PluginLoader {
 
         // When using Paper API
         if (AmethyTerminal.PAPERAPI) {
-          Field bukkitPluginsField = pluginManager.getClass().getDeclaredField("plugins");
-          bukkitPluginsField.setAccessible(true);
-          bukkitPlugins = (List<Plugin>) bukkitPluginsField.get(pluginManager);
-
           // For Paper, PaperPluginManagerImpl implements PluginManager
           // todo inject listeners (perhaps PaperEventManager does the thing)
           Field paperPluginManagerField = Bukkit.getPluginManager().getClass().getDeclaredField("paperPluginManager");
@@ -162,13 +157,8 @@ public class PluginLoader {
 
     // Remove plugin
     if (plugins != null && plugins.contains(plugin)) {
-      console.debug("remove plugin");
       plugins.remove(plugin);
     }
-
-    console.debug(Arrays.toString(plugins.toArray()));
-
-    console.debug(Arrays.toString(Bukkit.getPluginManager().getPlugins()));
 
     // Remove name
     String name = (AmethyTerminal.PAPERAPI) ? plugin.getPluginMeta().getName().toLowerCase(Locale.ENGLISH) : plugin.getName();
@@ -254,8 +244,6 @@ public class PluginLoader {
     plugin.onLoad();
 
     Bukkit.getPluginManager().enablePlugin(plugin);
-
-    console.debug(Arrays.toString(Bukkit.getPluginManager().getPlugins()));
   }
 
   public static void download(File file, URL url) {

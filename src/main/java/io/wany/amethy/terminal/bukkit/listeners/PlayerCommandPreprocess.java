@@ -18,7 +18,6 @@ public class PlayerCommandPreprocess implements Listener {
 
   @EventHandler
   public void onEvent(PlayerCommandPreprocessEvent event) {
-    console.log(event.getMessage());
     if (event.getMessage().equalsIgnoreCase("/plugins") || event.getMessage().equalsIgnoreCase("/pl") || event.getMessage().equalsIgnoreCase("/bukkit:plugins") || event.getMessage().equalsIgnoreCase("/bukkit:pl")) {
 
       event.setCancelled(true);
