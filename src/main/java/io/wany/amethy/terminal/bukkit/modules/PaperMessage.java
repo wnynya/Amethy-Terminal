@@ -7,6 +7,7 @@ import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.command.ConsoleCommandSender;
 
+@SuppressWarnings("unused FieldCanBeLocal")
 public class PaperMessage implements ServerMessage {
 
   private static PaperMessage THIS;

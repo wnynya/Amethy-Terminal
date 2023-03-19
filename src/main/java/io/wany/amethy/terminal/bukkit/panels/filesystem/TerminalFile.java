@@ -10,6 +10,7 @@ import java.util.Base64;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class TerminalFile extends EventEmitter {
 
   private final File file;
@@ -18,7 +19,6 @@ public class TerminalFile extends EventEmitter {
   private FileOutputStream fos = null;
   private BufferedOutputStream bos = null;
   private final int chunkSize = 75000;
-  private final int chunkBlockSize = chunkSize * 10;
   private int chunksLength = 0;
   private int chunksIndex = 0;
   private int chunksOffset = 0;
@@ -97,7 +97,7 @@ public class TerminalFile extends EventEmitter {
 
   private void copy(TerminalFile dest, Consumer<Object> end) {
     TerminalFile d = new TerminalFile(dest.file, this.chunks());
-    this.read((index, chunk) -> d.write(index, chunk));
+    this.read(d::write);
     d.on("write/close", (args) -> end.accept(null));
   }
 
@@ -131,13 +131,6 @@ public class TerminalFile extends EventEmitter {
         int size = Math.min(this.bis.available(), this.chunkSize);
         byte[] bytes = new byte[size];
         this.bis.read(bytes, 0, bytes.length);
-        char[] hexArray = "0123456789ABCDEF".toCharArray();
-        char[] hexChars = new char[bytes.length * 2];
-        for (int j = 0; j < bytes.length; j++) {
-          int v = bytes[j] & 0xFF;
-          hexChars[j * 2] = hexArray[v >>> 4];
-          hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-        }
         String chunk;
         if (base64) {
           chunk = Base64.getEncoder().encodeToString(bytes);
@@ -193,6 +186,7 @@ public class TerminalFile extends EventEmitter {
       this.bos.write(bytes, 0, length);
       this.emit("write/write", this.chunksIndex);
       this.chunksOffset += length;
+      int chunkBlockSize = chunkSize * 10;
       if (this.chunksOffset >= chunkBlockSize) {
         this.bos.flush();
         this.chunksOffset = 0;
@@ -237,16 +231,6 @@ public class TerminalFile extends EventEmitter {
     }
     catch (IOException e) {
       e.printStackTrace();
-    }
-  }
-
-  public void waitRead(long mil) {
-    if (this.bis != null) {
-      try {
-        this.bis.wait(mil);
-      }
-      catch (InterruptedException e) {
-      }
     }
   }
 

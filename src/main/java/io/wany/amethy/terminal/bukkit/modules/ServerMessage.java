@@ -30,6 +30,7 @@ public interface ServerMessage {
     send(audience, prefix, "§e§l[오류]: ", objects);
   }
 
+  @SuppressWarnings("unused")
   class ERROR {
     public static final String INSUFFICIENT_ARGS = "명령어 인자가 부족합니다.";
     public static final String NO_PERM = "명령어를 사용할 수 있는 권한이 없습니다.";

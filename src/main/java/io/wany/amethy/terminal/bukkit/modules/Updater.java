@@ -19,6 +19,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@SuppressWarnings("unused deprecation ResultOfMethodCallIgnored")
 public class Updater {
 
   private static final String PACKAGE = "Amethy-Terminal-Bukkit";

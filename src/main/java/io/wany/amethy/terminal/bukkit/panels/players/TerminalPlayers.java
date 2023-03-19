@@ -16,6 +16,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@SuppressWarnings("deprecation")
 public class TerminalPlayers {
 
   private static final ExecutorService onEnableExecutor = Executors.newFixedThreadPool(1);
@@ -24,14 +25,12 @@ public class TerminalPlayers {
   public static void onEnable() {
     addEventListener();
 
-    onEnableExecutor.submit(() -> {
-      onEnableTimer1s.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          sendPlayers();
-        }
-      }, 0, 1000);
-    });
+    onEnableExecutor.submit(() -> onEnableTimer1s.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        sendPlayers();
+      }
+    }, 0, 1000));
   }
 
   public static void onDisable() {
@@ -40,9 +39,7 @@ public class TerminalPlayers {
   }
 
   public static void addEventListener() {
-    TerminalNode.on("players/player", (client, data) -> {
-      sendPlayer(client, data.getString("player"));
-    });
+    TerminalNode.on("players/player", (client, data) -> sendPlayer(client, data.getString("player")));
   }
 
   public static Json getPlayers() {
@@ -63,6 +60,7 @@ public class TerminalPlayers {
     return object;
   }
 
+  @SuppressWarnings("ConstantConditions")
   public static Json getPlayer(String name) {
     Json object = new Json();
     Player player = Bukkit.getPlayer(name);

@@ -7,7 +7,6 @@ import io.wany.amethyst.network.HTTPRequestOptions.Method;
 import io.wany.amethyst.network.HTTPRequestOptions.ResponseType;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 

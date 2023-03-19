@@ -30,30 +30,14 @@ public class TerminalFilesystem {
   }
 
   public static void addEventListener() {
-    TerminalNode.on("filesystem/dir-read", (client, data) -> {
-      dirRead(client, data.getString("path"));
-    });
-    TerminalNode.on("filesystem/dir-create", (client, data) -> {
-      dirCreate(client, data.getString("path"));
-    });
-    TerminalNode.on("filesystem/dir-delete", (client, data) -> {
-      dirDelete(client, data.getString("path"));
-    });
-    TerminalNode.on("filesystem/file-read", (client, data) -> {
-      fileRead(client, data.getString("path"));
-    });
-    TerminalNode.on("filesystem/file-create", (client, data) -> {
-      fileCreate(client, data.getString("path"));
-    });
-    TerminalNode.on("filesystem/file-write-open", (client, data) -> {
-      fileWriteOpen(client, data.getString("path"), data.getInt("chunks"));
-    });
-    TerminalNode.on("filesystem/file-write-chunk", (client, data) -> {
-      fileWriteChunk(client, data.getString("path"), data.getInt("index"), data.getString("chunk"));
-    });
-    TerminalNode.on("filesystem/file-delete", (client, data) -> {
-      fileDelete(client, data.getString("path"));
-    });
+    TerminalNode.on("filesystem/dir-read", (client, data) -> dirRead(client, data.getString("path")));
+    TerminalNode.on("filesystem/dir-create", (client, data) -> dirCreate(client, data.getString("path")));
+    TerminalNode.on("filesystem/dir-delete", (client, data) -> dirDelete(client, data.getString("path")));
+    TerminalNode.on("filesystem/file-read", (client, data) -> fileRead(client, data.getString("path")));
+    TerminalNode.on("filesystem/file-create", (client, data) -> fileCreate(client, data.getString("path")));
+    TerminalNode.on("filesystem/file-write-open", (client, data) -> fileWriteOpen(client, data.getString("path"), data.getInt("chunks")));
+    TerminalNode.on("filesystem/file-write-chunk", (client, data) -> fileWriteChunk(client, data.getString("path"), data.getInt("index"), data.getString("chunk")));
+    TerminalNode.on("filesystem/file-delete", (client, data) -> fileDelete(client, data.getString("path")));
   }
 
   public static void dirRead(Json client, String path) {

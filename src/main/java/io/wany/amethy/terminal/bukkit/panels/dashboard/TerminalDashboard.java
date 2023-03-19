@@ -13,10 +13,10 @@ import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@SuppressWarnings("deprecation")
 public class TerminalDashboard {
 
   private static int TPS_CURRENT = 0;
@@ -29,20 +29,16 @@ public class TerminalDashboard {
   private static Json cachedSystemInfo = null;
 
   public static void onEnable() {
-    onEnableBukkitTask1t = Bukkit.getScheduler().runTaskTimer(AmethyTerminal.PLUGIN, () -> {
-      TPS_CURRENT++;
-    }, 0L, 1L);
+    onEnableBukkitTask1t = Bukkit.getScheduler().runTaskTimer(AmethyTerminal.PLUGIN, () -> TPS_CURRENT++, 0L, 1L);
 
-    onEnableExecutor.submit(() -> {
-      onEnableTimer1s.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          TPS_LAST = TPS_CURRENT;
-          TPS_CURRENT = 0;
-          sendSystemStatus();
-        }
-      }, 0, 1000);
-    });
+    onEnableExecutor.submit(() -> onEnableTimer1s.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        TPS_LAST = TPS_CURRENT;
+        TPS_CURRENT = 0;
+        sendSystemStatus();
+      }
+    }, 0, 1000));
   }
 
   public static void onDisable() {
@@ -134,7 +130,7 @@ public class TerminalDashboard {
       }
       network.set("ip", ip);
       network.set("hostname", hostname);
-      List<Json> netInterfaces = new ArrayList<Json>();
+      List<Json> netInterfaces = new ArrayList<>();
       try {
         Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces();
         while (nics.hasMoreElements()) {
@@ -159,7 +155,7 @@ public class TerminalDashboard {
 
     // 명령어 목록
     try {
-      List<String> commands = new ArrayList<String>();
+      List<String> commands = new ArrayList<>();
       for (HelpTopic topic : Bukkit.getHelpMap().getHelpTopics()) {
         if (!topic.getName().startsWith("/")) {
           continue;
@@ -230,15 +226,12 @@ public class TerminalDashboard {
 
     // 엔티티 수
     try {
-      int entitiesCount = Bukkit.getScheduler().callSyncMethod(AmethyTerminal.PLUGIN, new Callable<Integer>() {
-        @Override
-        public Integer call() {
-          int entitiesCount = 0;
-          for (World world : Bukkit.getWorlds()) {
-            entitiesCount += world.getEntities().size();
-          }
-          return entitiesCount;
+      int entitiesCount = Bukkit.getScheduler().callSyncMethod(AmethyTerminal.PLUGIN, () -> {
+        int entitiesCount1 = 0;
+        for (World world : Bukkit.getWorlds()) {
+          entitiesCount1 += world.getEntities().size();
         }
+        return entitiesCount1;
       }).get();
       object.set("entities-count", entitiesCount);
     }

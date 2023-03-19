@@ -6,6 +6,7 @@ import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
+@SuppressWarnings("unused deprecation FieldCanBeLocal")
 public class SpigotMessage implements ServerMessage {
 
   private static SpigotMessage THIS;

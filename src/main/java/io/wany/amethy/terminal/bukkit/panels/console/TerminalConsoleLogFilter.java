@@ -89,7 +89,7 @@ public class TerminalConsoleLogFilter implements Filter {
       // 터미널이 열려 있는 경우
       if (TerminalNode.isOpened()) {
         // 오프라인 로그 스택이 비어 있는 경우 -> 로그 전송
-        if (TerminalConsole.offlineLogs.size() <= 0) {
+        if (TerminalConsole.offlineLogs.size() == 0) {
           TerminalConsole.log(log);
         }
         // 오프라인 로그 스택이 차 있는 경우 -> 오프라인 로그부터 전송

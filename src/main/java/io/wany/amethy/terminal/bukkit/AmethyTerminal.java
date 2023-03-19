@@ -22,6 +22,8 @@ import java.io.File;
  * <p></p>
  * ©2023 Wany <sung@wany.io> (https://wany.io)
  */
+
+@SuppressWarnings("unused deprecation")
 public class AmethyTerminal extends JavaPlugin {
 
   public static AmethyTerminal PLUGIN;
@@ -39,7 +41,6 @@ public class AmethyTerminal extends JavaPlugin {
   public static boolean DEBUG = false;
   protected static String UID = "";
   protected static String KEY = "";
-  private static int JAVA_VERSION;
   private static boolean DISABLED = false;
   public static boolean PAPERAPI;
   public static ServerMessage MESSAGE;
@@ -77,7 +78,7 @@ public class AmethyTerminal extends JavaPlugin {
         javaVersion = javaVersion.substring(0, dot);
       }
     }
-    JAVA_VERSION = Integer.parseInt(javaVersion);
+    int JAVA_VERSION = Integer.parseInt(javaVersion);
 
     if (JAVA_VERSION < 11) {
       DISABLED = true;
@@ -127,6 +128,7 @@ public class AmethyTerminal extends JavaPlugin {
 
   }
 
+  @SuppressWarnings("all")
   protected void registerCommand(String cmd, CommandExecutor exc, TabCompleter tab) {
     PluginCommand pc = this.getCommand(cmd);
     if (pc == null) {

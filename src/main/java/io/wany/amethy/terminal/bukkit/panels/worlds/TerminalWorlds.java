@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@SuppressWarnings("deprecation")
 public class TerminalWorlds {
 
   private static final ExecutorService onEnableExecutor = Executors.newFixedThreadPool(1);
@@ -27,14 +27,12 @@ public class TerminalWorlds {
   public static void onEnable() {
     addEventListener();
 
-    onEnableExecutor.submit(() -> {
-      onEnableTimer10s.schedule(new TimerTask() {
-        @Override
-        public void run() {
-          sendWorlds();
-        }
-      }, 0, 10000);
-    });
+    onEnableExecutor.submit(() -> onEnableTimer10s.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        sendWorlds();
+      }
+    }, 0, 10000));
   }
 
   public static void onDisable() {
@@ -43,14 +41,11 @@ public class TerminalWorlds {
   }
 
   public static void addEventListener() {
-    TerminalNode.on("worlds/world", (client, data) -> {
-      sendWorld(client, data.getString("world"));
-    });
-    TerminalNode.on("worlds/gamerule", (client, data) -> {
-      setGameRule(data.getString("world"), data.getString("gamerule"), data.getString("value"));
-    });
+    TerminalNode.on("worlds/world", (client, data) -> sendWorld(client, data.getString("world")));
+    TerminalNode.on("worlds/gamerule", (client, data) -> setGameRule(data.getString("world"), data.getString("gamerule"), data.getString("value")));
   }
 
+  @SuppressWarnings("ConstantConditions")
   public static Json getWorlds() {
     Json object = new Json();
 
@@ -69,6 +64,7 @@ public class TerminalWorlds {
     return object;
   }
 
+  @SuppressWarnings("ConstantConditions")
   public static Json getWorld(String worldName) {
     Json object = new Json();
     World world = Bukkit.getWorld(worldName);
@@ -87,36 +83,33 @@ public class TerminalWorlds {
 
     // 엔티티
     try {
-      Bukkit.getScheduler().callSyncMethod(AmethyTerminal.PLUGIN, new Callable<Object>() {
-        @Override
-        public Integer call() {
-          int all = 0;
-          int players = 0;
-          int animals = 0;
-          int monsters = 0;
-          int etc = 0;
-          for (Entity entity : world.getEntities()) {
-            all++;
-            if (entity instanceof Player) {
-              players++;
-            }
-            else if (entity instanceof Animals) {
-              animals++;
-            }
-            else if (entity instanceof Monster) {
-              monsters++;
-            }
-            else {
-              etc++;
-            }
+      Bukkit.getScheduler().callSyncMethod(AmethyTerminal.PLUGIN, () -> {
+        int all = 0;
+        int players = 0;
+        int animals = 0;
+        int monsters = 0;
+        int etc = 0;
+        for (Entity entity : world.getEntities()) {
+          all++;
+          if (entity instanceof Player) {
+            players++;
           }
-          object.set("entities-all", all);
-          object.set("entities-players", players);
-          object.set("entities-animals", animals);
-          object.set("entities-monsters", monsters);
-          object.set("entities-etc", etc);
-          return null;
+          else if (entity instanceof Animals) {
+            animals++;
+          }
+          else if (entity instanceof Monster) {
+            monsters++;
+          }
+          else {
+            etc++;
+          }
         }
+        object.set("entities-all", all);
+        object.set("entities-players", players);
+        object.set("entities-animals", animals);
+        object.set("entities-monsters", monsters);
+        object.set("entities-etc", etc);
+        return null;
       }).get();
     }
     catch (Exception ignored) {
@@ -162,17 +155,14 @@ public class TerminalWorlds {
     }
 
     try {
-      Bukkit.getScheduler().callSyncMethod(AmethyTerminal.PLUGIN, new Callable<Object>() {
-        @Override
-        public Integer call() {
-          if (world.getGameRuleDefault(gameRule) instanceof Integer) {
-            world.setGameRule((GameRule<Integer>) gameRule, Integer.parseInt(value));
-          }
-          else {
-            world.setGameRule((GameRule<Boolean>) gameRule, Boolean.valueOf(value));
-          }
-          return null;
+      Bukkit.getScheduler().callSyncMethod(AmethyTerminal.PLUGIN, () -> {
+        if (world.getGameRuleDefault(gameRule) instanceof Integer) {
+          world.setGameRule((GameRule<Integer>) gameRule, Integer.parseInt(value));
         }
+        else {
+          world.setGameRule((GameRule<Boolean>) gameRule, Boolean.valueOf(value));
+        }
+        return null;
       }).get();
     }
     catch (Exception ignored) {

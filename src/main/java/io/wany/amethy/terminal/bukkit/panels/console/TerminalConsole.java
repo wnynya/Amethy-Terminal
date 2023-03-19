@@ -31,9 +31,7 @@ public class TerminalConsole {
   }
 
   public static void addEventListener() {
-    TerminalNode.on("console/command", (client, data) -> {
-      command(client, data.getString("command"));
-    });
+    TerminalNode.on("console/command", (client, data) -> command(client, data.getString("command")));
   }
 
   public static class Log {
@@ -108,6 +106,7 @@ public class TerminalConsole {
     }
   }
 
+  @SuppressWarnings("unused")
   public static void command(Json client, String input) {
     log(new Log("> " + input, System.currentTimeMillis(), "INFO", "ConsoleCommand", "ConsoleCommand"));
     Bukkit.getScheduler().runTask(AmethyTerminal.PLUGIN, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), input));

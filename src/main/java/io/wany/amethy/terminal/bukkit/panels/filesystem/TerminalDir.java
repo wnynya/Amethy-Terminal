@@ -10,6 +10,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class TerminalDir {
 
   private final File file;
@@ -80,7 +81,11 @@ public class TerminalDir {
     currentInfo.set("name", ".");
     files.add(currentInfo);
 
-    for (File file : this.file.listFiles()) {
+    File[] filesList = this.file.listFiles();
+    if (filesList == null) {
+      return files;
+    }
+    for (File file : filesList) {
       if (file.isDirectory()) {
         TerminalDir td = new TerminalDir(file);
         files.add(td.info());
