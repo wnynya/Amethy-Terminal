@@ -1,41 +1,35 @@
 package io.wany.amethy.terminal.bukkit.panels.filesystem;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import io.wany.amethyst.EventEmitter;
+import io.wany.amethyst.Json;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Base64;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import io.wany.amethyst.EventEmitter;
-import io.wany.amethyst.Json;
-
 public class TerminalFile extends EventEmitter {
 
-  private File file;
+  private final File file;
   private FileInputStream fis = null;
   private BufferedInputStream bis = null;
   private FileOutputStream fos = null;
   private BufferedOutputStream bos = null;
-  private int chunkSize = 75000;
-  private int chunkBlockSize = chunkSize * 10;
+  private final int chunkSize = 75000;
+  private final int chunkBlockSize = chunkSize * 10;
   private int chunksLength = 0;
   private int chunksIndex = 0;
   private int chunksOffset = 0;
   private String[] waitingChunks;
 
-  private boolean base64 = true;
+  private final boolean base64 = true;
 
   public TerminalFile(File file) {
     super();
 
     this.file = file.getAbsoluteFile();
-    ;
   }
 
   public TerminalFile(File file, int chunks) {
@@ -63,7 +57,8 @@ public class TerminalFile extends EventEmitter {
       BasicFileAttributes attr = Files.readAttributes(this.file.toPath(), BasicFileAttributes.class);
       json.set("creation", attr.creationTime().toMillis());
       json.set("modified", attr.lastModifiedTime().toMillis());
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       json.set("creation", 0);
       json.set("modified", 0);
     }
@@ -73,7 +68,8 @@ public class TerminalFile extends EventEmitter {
   public long size() {
     try {
       return Files.size(this.file.toPath());
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       e.printStackTrace();
     }
     return -1;
@@ -87,7 +83,8 @@ public class TerminalFile extends EventEmitter {
         dir.mkdirs();
       }
       this.file.createNewFile();
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       e.printStackTrace();
     }
   }
@@ -144,7 +141,8 @@ public class TerminalFile extends EventEmitter {
         String chunk;
         if (base64) {
           chunk = Base64.getEncoder().encodeToString(bytes);
-        } else {
+        }
+        else {
           chunk = new String(bytes);
         }
         reader.accept(index, chunk);
@@ -156,7 +154,8 @@ public class TerminalFile extends EventEmitter {
       this.fis.close();
       this.bis.close();
       this.emit("read/close");
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       this.emit("error", e);
     }
   }
@@ -186,7 +185,8 @@ public class TerminalFile extends EventEmitter {
       byte[] bytes;
       if (base64) {
         bytes = Base64.getDecoder().decode(chunk);
-      } else {
+      }
+      else {
         bytes = chunk.getBytes();
       }
       int length = bytes.length;
@@ -213,7 +213,8 @@ public class TerminalFile extends EventEmitter {
         this.waitingChunks[this.chunksIndex] = null;
         this.write(this.chunksIndex, c);
       }
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       this.emit("error", e);
     }
   }
@@ -233,7 +234,8 @@ public class TerminalFile extends EventEmitter {
         this.bos.flush();
         this.bos.close();
       }
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       e.printStackTrace();
     }
   }
@@ -242,7 +244,8 @@ public class TerminalFile extends EventEmitter {
     if (this.bis != null) {
       try {
         this.bis.wait(mil);
-      } catch (InterruptedException e) {
+      }
+      catch (InterruptedException e) {
       }
     }
   }

@@ -1,13 +1,5 @@
 package io.wany.amethy.terminal.bukkit;
 
-import java.net.URI;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.function.BiConsumer;
-
 import io.wany.amethy.terminal.bukkit.panels.console.TerminalConsole;
 import io.wany.amethy.terminal.bukkit.panels.dashboard.TerminalDashboard;
 import io.wany.amethy.terminal.bukkit.panels.filesystem.TerminalFilesystem;
@@ -17,6 +9,14 @@ import io.wany.amethyst.EventEmitter;
 import io.wany.amethyst.Json;
 import io.wany.amethyst.network.WebSocketClient;
 import io.wany.amethyst.network.WebSocketClientOptions;
+
+import java.net.URI;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
 
 public class TerminalNode {
 
@@ -84,7 +84,8 @@ public class TerminalNode {
     if (!TerminalNodeAPI.ping()) {
       try {
         TimeUnit.SECONDS.sleep(1);
-      } catch (InterruptedException ignored) {
+      }
+      catch (InterruptedException ignored) {
       }
       return;
     }
@@ -112,7 +113,8 @@ public class TerminalNode {
 
     try {
       WEBSOCKET = new WebSocketClient(new URI("wss://" + API), options);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 연결 수립
@@ -145,7 +147,8 @@ public class TerminalNode {
 
     try {
       WEBSOCKET.open();
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
   }

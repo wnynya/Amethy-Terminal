@@ -1,5 +1,8 @@
 package io.wany.amethy.terminal.bukkit.panels.filesystem;
 
+import io.wany.amethy.terminal.bukkit.TerminalNode;
+import io.wany.amethyst.Json;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,13 +11,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import io.wany.amethy.terminal.bukkit.TerminalNode;
-import io.wany.amethyst.Json;
-
 public class TerminalFilesystem {
 
-  private static List<TerminalFile> readingfiles = new ArrayList<>();
-  private static HashMap<String, TerminalFile> writingFiles = new HashMap<>();
+  private static final List<TerminalFile> readingfiles = new ArrayList<>();
+  private static final HashMap<String, TerminalFile> writingFiles = new HashMap<>();
 
   public static void onEnable() {
     addEventListener();
@@ -102,7 +102,8 @@ public class TerminalFilesystem {
         TerminalNode.event("filesystem/file-read-chunk", client, data);
         try {
           TimeUnit.MILLISECONDS.sleep(150);
-        } catch (InterruptedException ignored) {
+        }
+        catch (InterruptedException ignored) {
         }
       });
     });

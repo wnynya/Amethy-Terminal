@@ -1,7 +1,6 @@
 package io.wany.amethy.terminal.bukkit.panels.console;
 
-import java.util.concurrent.TimeUnit;
-
+import io.wany.amethy.terminal.bukkit.TerminalNode;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.core.Filter;
@@ -9,7 +8,7 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.message.Message;
 
-import io.wany.amethy.terminal.bukkit.TerminalNode;
+import java.util.concurrent.TimeUnit;
 
 public class TerminalConsoleLogFilter implements Filter {
 
@@ -38,8 +37,7 @@ public class TerminalConsoleLogFilter implements Filter {
         stack.append(thrown.getMessage());
         StackTraceElement[] stea = thrown.getStackTrace();
         for (StackTraceElement ste : stea) {
-          stack.append("\r\n\tat ").append(ste.getFileName()).append(":").append(ste.getLineNumber()).append(" (")
-              .append(ste.getClassName()).append(".").append(ste.getMethodName()).append(")");
+          stack.append("\r\n\tat ").append(ste.getFileName()).append(":").append(ste.getLineNumber()).append(" (").append(ste.getClassName()).append(".").append(ste.getMethodName()).append(")");
         }
         Throwable thrownCause = thrown.getCause();
         while (thrownCause != null) {
@@ -47,8 +45,7 @@ public class TerminalConsoleLogFilter implements Filter {
           stack.append(thrownCause.getClass().getName());
           StackTraceElement[] cstea = thrownCause.getStackTrace();
           for (StackTraceElement ste : cstea) {
-            stack.append("\r\n\tat ").append(ste.getFileName()).append(":").append(ste.getLineNumber()).append(" (")
-                .append(ste.getClassName()).append(".").append(ste.getMethodName()).append(")");
+            stack.append("\r\n\tat ").append(ste.getFileName()).append(":").append(ste.getLineNumber()).append(" (").append(ste.getClassName()).append(".").append(ste.getMethodName()).append(")");
           }
           thrownCause = thrownCause.getCause();
         }
@@ -82,12 +79,12 @@ public class TerminalConsoleLogFilter implements Filter {
 
       try {
         TimeUnit.MICROSECONDS.sleep(1);
-      } catch (InterruptedException ignored) {
+      }
+      catch (InterruptedException ignored) {
       }
 
       // 로그 오브젝트 만들기
-      TerminalConsole.Log log = new TerminalConsole.Log(message, time, level,
-          thread, logger, loggerFqcn, marker, source);
+      TerminalConsole.Log log = new TerminalConsole.Log(message, time, level, thread, logger, loggerFqcn, marker, source);
 
       // 터미널이 열려 있는 경우
       if (TerminalNode.isOpened()) {
@@ -106,7 +103,8 @@ public class TerminalConsoleLogFilter implements Filter {
         TerminalConsole.offlineLogs.add(log);
       }
 
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
       // 로그 필터에서 예외가 발생하면 -> 서버가 폭발함
     }
     return null;
@@ -173,44 +171,37 @@ public class TerminalConsoleLogFilter implements Filter {
   }
 
   @Override
-  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2,
-      Object p3) {
+  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3) {
     return null;
   }
 
   @Override
-  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2,
-      Object p3, Object p4) {
+  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4) {
     return null;
   }
 
   @Override
-  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2,
-      Object p3, Object p4, Object p5) {
+  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5) {
     return null;
   }
 
   @Override
-  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2,
-      Object p3, Object p4, Object p5, Object p6) {
+  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
     return null;
   }
 
   @Override
-  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2,
-      Object p3, Object p4, Object p5, Object p6, Object p7) {
+  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7) {
     return null;
   }
 
   @Override
-  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2,
-      Object p3, Object p4, Object p5, Object p6, Object p7, Object p8) {
+  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7, Object p8) {
     return null;
   }
 
   @Override
-  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2,
-      Object p3, Object p4, Object p5, Object p6, Object p7, Object p8, Object p9) {
+  public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7, Object p8, Object p9) {
     return null;
   }
 

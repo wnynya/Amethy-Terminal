@@ -1,16 +1,15 @@
 package io.wany.amethy.terminal.bukkit.panels.console;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import io.wany.amethy.terminal.bukkit.AmethyTerminal;
+import io.wany.amethy.terminal.bukkit.TerminalNode;
+import io.wany.amethy.terminal.bukkit.console;
+import io.wany.amethyst.Json;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.bukkit.Bukkit;
 
-import io.wany.amethy.terminal.bukkit.AmethyTerminal;
-import io.wany.amethy.terminal.bukkit.console;
-import io.wany.amethy.terminal.bukkit.TerminalNode;
-import io.wany.amethyst.Json;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TerminalConsole {
 
@@ -47,8 +46,7 @@ public class TerminalConsole {
     public final String marker;
     public final String source;
 
-    public Log(String message, long time, String level, String thread, String logger, String loggerFqcn, String marker,
-        String source) {
+    public Log(String message, long time, String level, String thread, String logger, String loggerFqcn, String marker, String source) {
       this.message = message;
       this.time = time;
       this.level = level;
@@ -112,8 +110,7 @@ public class TerminalConsole {
 
   public static void command(Json client, String input) {
     log(new Log("> " + input, System.currentTimeMillis(), "INFO", "ConsoleCommand", "ConsoleCommand"));
-    Bukkit.getScheduler().runTask(AmethyTerminal.PLUGIN,
-        () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), input));
+    Bukkit.getScheduler().runTask(AmethyTerminal.PLUGIN, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), input));
   }
 
 }

@@ -13,10 +13,10 @@ public class PaperMessage implements Message {
   public Object of(Object... objects) {
     Component component = Component.empty();
     for (Object obj : objects) {
-      if(obj instanceof Component) {
+      if (obj instanceof Component) {
         component = component.append((Component) obj);
       }
-      else if(obj instanceof String) {
+      else if (obj instanceof String) {
         String str = (String) obj;
         component = component.append(LegacyComponentSerializer.legacySection().deserialize(str));
       }

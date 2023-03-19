@@ -1,5 +1,12 @@
 package io.wany.amethy.terminal.bukkit.panels.players;
 
+import io.wany.amethy.terminal.bukkit.TerminalNode;
+import io.wany.amethyst.Json;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Player;
+
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -8,14 +15,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Player;
-
-import io.wany.amethy.terminal.bukkit.TerminalNode;
-import io.wany.amethyst.Json;
 
 public class TerminalPlayers {
 

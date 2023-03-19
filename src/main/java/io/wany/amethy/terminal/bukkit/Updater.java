@@ -1,5 +1,10 @@
 package io.wany.amethy.terminal.bukkit;
 
+import io.wany.amethyst.Json;
+import io.wany.amethyst.network.HTTPRequest;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,12 +16,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import org.bukkit.Bukkit;
-
-import io.wany.amethyst.Json;
-import io.wany.amethyst.network.HTTPRequest;
-import org.bukkit.plugin.Plugin;
 
 public class Updater {
 
@@ -43,14 +42,16 @@ public class Updater {
     // 콘피그에서 업데이터 채널 가져오기
     if (AmethyTerminal.CONFIG.has("updater.channel")) {
       CHANNEL = AmethyTerminal.CONFIG.getString("updater.channel");
-    } else {
+    }
+    else {
       AmethyTerminal.CONFIG.set("updater.channel", CHANNEL);
     }
 
     // 콘피그에서 업데이터 자동화 여부 가져오기
     if (AmethyTerminal.CONFIG.has("updater.automation")) {
       AUTOMATION = AmethyTerminal.CONFIG.getBoolean("updater.automation");
-    } else {
+    }
+    else {
       AmethyTerminal.CONFIG.set("updater.automation", AUTOMATION);
     }
 
@@ -73,6 +74,7 @@ public class Updater {
 
   /**
    * 최신 플러그인 버전 가져오기
+   *
    * @return 최신 플러그인 버전
    * @throws Exception 오류
    */
@@ -85,6 +87,7 @@ public class Updater {
 
   /**
    * 현재 플러그인이 최신 버전인지 확인
+   *
    * @return 최신 버전 여부
    * @throws Exception 오류
    */
@@ -94,6 +97,7 @@ public class Updater {
 
   /**
    * 특정 버전의 플러그인 패키지 다운로드
+   *
    * @param version 플러그인 버전
    * @return 다운로드한 플러그인 패키지 파일
    * @throws Exception 오류
@@ -107,14 +111,14 @@ public class Updater {
       }
       file.getParentFile().mkdirs();
       file.createNewFile();
-    } catch (SecurityException | IOException exception) {
+    }
+    catch (SecurityException | IOException exception) {
       file.delete();
       throw exception;
     }
 
     try {
-      BufferedInputStream bis = new BufferedInputStream(
-        new URL("https://" + API + "/" + CHANNEL + "/" + version + "/download").openStream());
+      BufferedInputStream bis = new BufferedInputStream(new URL("https://" + API + "/" + CHANNEL + "/" + version + "/download").openStream());
       FileOutputStream fis = new FileOutputStream(file);
       byte[] buffer = new byte[1024];
       int count;
@@ -123,7 +127,8 @@ public class Updater {
       }
       fis.close();
       bis.close();
-    } catch (Exception exception) {
+    }
+    catch (Exception exception) {
       file.delete();
       throw exception;
     }
@@ -133,8 +138,9 @@ public class Updater {
 
   /**
    * 특정 버전으로 플러그인 업데이트
+   *
    * @param tempFile 다운로드한 플러그인 패키지 파일
-   * @param version 다운로드한 플러그인 버전
+   * @param version  다운로드한 플러그인 버전
    * @throws Exception 오류
    */
   public static void update(File tempFile, String version) throws Exception {
@@ -165,7 +171,8 @@ public class Updater {
         File file = Updater.download(version);
         Updater.update(file, version);
       }
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
   }
 

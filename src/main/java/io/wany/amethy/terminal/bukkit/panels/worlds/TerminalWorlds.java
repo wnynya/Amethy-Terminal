@@ -1,13 +1,8 @@
 package io.wany.amethy.terminal.bukkit.panels.worlds;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import io.wany.amethy.terminal.bukkit.AmethyTerminal;
+import io.wany.amethy.terminal.bukkit.TerminalNode;
+import io.wany.amethyst.Json;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -16,9 +11,13 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 
-import io.wany.amethy.terminal.bukkit.AmethyTerminal;
-import io.wany.amethy.terminal.bukkit.TerminalNode;
-import io.wany.amethyst.Json;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TerminalWorlds {
 
@@ -100,11 +99,14 @@ public class TerminalWorlds {
             all++;
             if (entity instanceof Player) {
               players++;
-            } else if (entity instanceof Animals) {
+            }
+            else if (entity instanceof Animals) {
               animals++;
-            } else if (entity instanceof Monster) {
+            }
+            else if (entity instanceof Monster) {
               monsters++;
-            } else {
+            }
+            else {
               etc++;
             }
           }
@@ -116,14 +118,16 @@ public class TerminalWorlds {
           return null;
         }
       }).get();
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 청크
     try {
       object.set("chunks-loaded", world.getLoadedChunks().length);
       object.set("chunks-loaded-force", world.getForceLoadedChunks().size());
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 게임룰
@@ -132,13 +136,15 @@ public class TerminalWorlds {
       for (String gr : world.getGameRules()) {
         GameRule<?> gameRule = GameRule.getByName(gr);
         if (world.getGameRuleDefault(gameRule) instanceof Integer) {
-          gamerules.set(gr, (int) world.getGameRuleValue(gameRule));
-        } else {
-          gamerules.set(gr, (boolean) world.getGameRuleValue(gameRule));
+          gamerules.set(gr, world.getGameRuleValue(gameRule));
+        }
+        else {
+          gamerules.set(gr, world.getGameRuleValue(gameRule));
         }
       }
       object.set("gamerules", gamerules);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     return object;
@@ -161,13 +167,15 @@ public class TerminalWorlds {
         public Integer call() {
           if (world.getGameRuleDefault(gameRule) instanceof Integer) {
             world.setGameRule((GameRule<Integer>) gameRule, Integer.parseInt(value));
-          } else {
+          }
+          else {
             world.setGameRule((GameRule<Boolean>) gameRule, Boolean.valueOf(value));
           }
           return null;
         }
       }).get();
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
   }
 

@@ -11,7 +11,7 @@ public class BukkitMessage implements Message {
   public Object of(Object... objects) {
     StringBuilder builder = new StringBuilder();
     for (Object obj : objects) {
-      if(obj instanceof String) {
+      if (obj instanceof String) {
         builder.append((String) obj);
       }
       else {

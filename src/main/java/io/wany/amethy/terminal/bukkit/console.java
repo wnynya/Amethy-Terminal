@@ -17,7 +17,7 @@ public class console {
   private static String process(String message) {
     if (message.startsWith(AmethyTerminal.PREFIX)) {
       message = message.substring(AmethyTerminal.PREFIX.length());
-    };
+    }
     message = message.replaceAll("\\[([^]]+)]:", "[$1]");
 
     // Minecraft formatting codes
@@ -57,7 +57,7 @@ public class console {
     message = message.replaceAll("§d", "\u001b[0m\u001b[95m");
     message = message.replaceAll("§b", "\u001b[0m\u001b[96m");
     message = message.replaceAll("§f", "\u001b[0m\u001b[97m");
-    
+
     return message;
   }
 

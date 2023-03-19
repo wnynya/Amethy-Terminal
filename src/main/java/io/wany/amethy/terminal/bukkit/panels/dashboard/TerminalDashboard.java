@@ -1,26 +1,21 @@
 package io.wany.amethy.terminal.bukkit.panels.dashboard;
 
-import java.lang.management.ManagementFactory;
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import io.wany.amethy.terminal.bukkit.AmethyTerminal;
 import io.wany.amethy.terminal.bukkit.TerminalNode;
 import io.wany.amethyst.Json;
-
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.help.HelpTopic;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.lang.management.ManagementFactory;
+import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TerminalDashboard {
 
@@ -72,7 +67,8 @@ public class TerminalDashboard {
       system.set("arch", osb.getArch());
       system.set("availableProcessors", osb.getAvailableProcessors());
       object.set("system", system);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 사용자 정보
@@ -82,7 +78,8 @@ public class TerminalDashboard {
       user.set("home", System.getProperty("user.home"));
       user.set("dir", System.getProperty("user.dir"));
       object.set("user", user);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // OS 정보
@@ -92,7 +89,8 @@ public class TerminalDashboard {
       os.set("name", System.getProperty("os.name"));
       os.set("arch", System.getProperty("os.arch"));
       object.set("os", os);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // JVM 정보
@@ -103,7 +101,8 @@ public class TerminalDashboard {
       java.set("vendor", System.getProperty("java.vm.vendor"));
       java.set("home", System.getProperty("java.home"));
       object.set("java", java);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 버킷 서버 정보
@@ -118,7 +117,8 @@ public class TerminalDashboard {
       server.set("motd", Bukkit.getServer().getMotd());
       server.set("dir", AmethyTerminal.SERVER_DIR.getAbsolutePath().replace("\\", "/"));
       object.set("server", server);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 네트워크 정보
@@ -129,7 +129,8 @@ public class TerminalDashboard {
       try {
         ip = InetAddress.getLocalHost().toString();
         hostname = InetAddress.getLocalHost().getHostName();
-      } catch (Exception ignored) {
+      }
+      catch (Exception ignored) {
       }
       network.set("ip", ip);
       network.set("hostname", hostname);
@@ -147,11 +148,13 @@ public class TerminalDashboard {
             netInterfaces.add(netInterface);
           }
         }
-      } catch (Exception ignored) {
+      }
+      catch (Exception ignored) {
       }
       network.set("interfaces", netInterfaces);
       object.set("network", network);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 명령어 목록
@@ -164,7 +167,8 @@ public class TerminalDashboard {
         commands.add(topic.getName().substring(1));
       }
       object.set("commands", commands);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     cachedSystemInfo = object;
@@ -179,7 +183,8 @@ public class TerminalDashboard {
     try {
       long uptime = ManagementFactory.getRuntimeMXBean().getUptime();
       object.set("uptime", uptime);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 메모리 상태
@@ -188,7 +193,8 @@ public class TerminalDashboard {
       object.set("memory-free", r.freeMemory());
       object.set("memory-max", r.maxMemory());
       object.set("memory-total", r.totalMemory());
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 프로세서 상태
@@ -198,17 +204,19 @@ public class TerminalDashboard {
       for (Method m : sunOsb.getDeclaredMethods()) {
         if (m.getName().equals("getCpuLoad")) {
           cpuLoad = true;
+          break;
         }
       }
-      com.sun.management.OperatingSystemMXBean osb = (com.sun.management.OperatingSystemMXBean) ManagementFactory
-          .getOperatingSystemMXBean();
+      com.sun.management.OperatingSystemMXBean osb = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
       if (cpuLoad) {
         object.set("cpu-system-load", osb.getCpuLoad());
-      } else {
+      }
+      else {
         object.set("cpu-system-load", osb.getSystemCpuLoad());
       }
       object.set("cpu-process-load", osb.getProcessCpuLoad());
-    } catch (Throwable t) {
+    }
+    catch (Throwable t) {
       java.lang.management.OperatingSystemMXBean osb = ManagementFactory.getOperatingSystemMXBean();
       object.set("cpu-system-load", osb.getSystemLoadAverage());
       object.set("cpu-process-load", osb.getSystemLoadAverage());
@@ -233,7 +241,8 @@ public class TerminalDashboard {
         }
       }).get();
       object.set("entities-count", entitiesCount);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     // 청크 수
@@ -246,7 +255,8 @@ public class TerminalDashboard {
       }
       object.set("chunks-loaded", chunks);
       object.set("chunks-loaded-force", forceChunks);
-    } catch (Exception ignored) {
+    }
+    catch (Exception ignored) {
     }
 
     return object;

@@ -1,33 +1,30 @@
 package io.wany.amethy.terminal.bukkit;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
-
 import io.wany.amethyst.Json;
 import io.wany.amethyst.network.HTTPRequest;
 import io.wany.amethyst.network.HTTPRequestOptions;
 import io.wany.amethyst.network.HTTPRequestOptions.Method;
 import io.wany.amethyst.network.HTTPRequestOptions.ResponseType;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
+
 public class TerminalNodeAPI {
 
-  private static Json syncJsonRequest(Method method, String url, String body)
-      throws MalformedURLException, InterruptedException, ExecutionException, IOException {
+  private static Json syncJsonRequest(Method method, String url, String body) throws InterruptedException, ExecutionException, IOException {
     HTTPRequestOptions options = new HTTPRequestOptions(method, ResponseType.JSON);
     options.HEADERS.put("amethy-terminal-node-key", AmethyTerminal.KEY);
     options.HEADERS.put("Content-Type", "application/Json");
     return (Json) HTTPRequest.syncRequest(new URL("https://" + TerminalNode.API + "/" + url), options, body);
   }
 
-  private static Json JsonGet(String url)
-      throws MalformedURLException, InterruptedException, ExecutionException, IOException {
+  private static Json JsonGet(String url) throws InterruptedException, ExecutionException, IOException {
     return syncJsonRequest(Method.GET, url, null);
   }
 
-  private static Json JsonPost(String url, Json body)
-      throws MalformedURLException, InterruptedException, ExecutionException, IOException {
+  private static Json JsonPost(String url, Json body) throws InterruptedException, ExecutionException, IOException {
     return syncJsonRequest(Method.POST, url, body.toString());
   }
 
@@ -35,12 +32,9 @@ public class TerminalNodeAPI {
     try {
       Json res = JsonGet("ping");
       String pong = res.getJsonElement("message").getAsString();
-      if (pong.equals("pong!")) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (Exception e) {
+      return pong.equals("pong!");
+    }
+    catch (Exception e) {
       return false;
     }
   }
@@ -49,7 +43,8 @@ public class TerminalNodeAPI {
     try {
       JsonGet(AmethyTerminal.UID + "/check");
       return true;
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       return false;
     }
   }
@@ -66,7 +61,8 @@ public class TerminalNodeAPI {
       AmethyTerminal.CONFIG.set("uid", AmethyTerminal.UID);
       AmethyTerminal.CONFIG.set("key", AmethyTerminal.KEY);
       return true;
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       return false;
     }
   }
@@ -77,7 +73,8 @@ public class TerminalNodeAPI {
       body.set("owner", aid);
       JsonPost(AmethyTerminal.UID + "/grant", body);
       return true;
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       return false;
     }
   }

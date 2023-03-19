@@ -1,5 +1,8 @@
 package io.wany.amethy.terminal.bukkit.panels.filesystem;
 
+import io.wany.amethyst.Json;
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,13 +10,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
-import io.wany.amethyst.Json;
-
 public class TerminalDir {
 
-  private File file;
+  private final File file;
 
   public TerminalDir(File file) {
     this.file = file;
@@ -36,7 +35,8 @@ public class TerminalDir {
       BasicFileAttributes attr = Files.readAttributes(this.file.toPath(), BasicFileAttributes.class);
       json.set("creation", attr.creationTime().toMillis());
       json.set("modified", attr.lastModifiedTime().toMillis());
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       json.set("creation", 0);
       json.set("modified", 0);
     }
@@ -46,7 +46,8 @@ public class TerminalDir {
   public long size() {
     try {
       return Files.size(this.file.toPath());
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       e.printStackTrace();
     }
     return -1;
@@ -59,7 +60,8 @@ public class TerminalDir {
   public void delete() {
     try {
       FileUtils.deleteDirectory(this.file);
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       e.printStackTrace();
     }
   }
@@ -82,7 +84,8 @@ public class TerminalDir {
       if (file.isDirectory()) {
         TerminalDir td = new TerminalDir(file);
         files.add(td.info());
-      } else if (file.isFile()) {
+      }
+      else if (file.isFile()) {
         TerminalFile tf = new TerminalFile(file);
         files.add(tf.info());
       }
