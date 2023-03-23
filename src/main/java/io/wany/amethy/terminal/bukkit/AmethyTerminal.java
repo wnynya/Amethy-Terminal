@@ -109,10 +109,6 @@ public class AmethyTerminal extends JavaPlugin {
 
     Updater.onEnable();
 
-    if (PAPERAPI) {
-      //registerEvent(new PlayerCommandPreprocess());
-    }
-
   }
 
   @Override
