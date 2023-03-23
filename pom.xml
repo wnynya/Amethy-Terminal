@@ -25,7 +25,7 @@
 
     <!-- repo:wanyne-amethy -->
     <repository>
-      <id>amethy</id>
+      <id>wanyne-amethy</id>
       <url>https://api.wany.io/amethy/repository/maven</url>
     </repository>
 

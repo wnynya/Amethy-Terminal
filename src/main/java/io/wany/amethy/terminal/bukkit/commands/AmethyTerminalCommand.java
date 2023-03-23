@@ -30,48 +30,6 @@ public class AmethyTerminalCommand implements CommandExecutor {
 
     switch (args[0].toLowerCase()) {
 
-      case "test": {
-        try {
-          Class<?> c = Class.forName("io.papermc.paper.plugin.entrypoint.LaunchEntryPointHandler");
-          Field ins = c.getField("INSTANCE");
-          ins.setAccessible(true);
-          Field f = c.getDeclaredField("storage");
-          f.setAccessible(true);
-          Object o = f.get(ins.get(null));
-
-          HashMap<?, ?> w = (HashMap<?, ?>) o;
-
-          Class<?> simple = Class.forName("io.papermc.paper.plugin.storage.SimpleProviderStorage");
-
-          Object sto = null;
-          List<Object> set = Collections.singletonList(w.entrySet());
-          for (int i = 0; i < set.size(); i++) {
-            Object value = set.get(i);
-            if (value.toString().contains("SimpleProviderStorage")) {
-              sto = value;
-              break;
-            }
-          }
-
-          if (sto == null) {
-            console.log("sto null");
-            return true;
-          }
-
-          console.log(sto.getClass().getName());
-
-          Object aaa = simple.cast(sto);
-
-          console.log(aaa.toString());
-
-          sto.getClass().getDeclaredField("providers");
-        }
-        catch (Throwable t) {
-          t.printStackTrace();
-        }
-        return true;
-      }
-
       // 플러그인 버전 확인
       case "version": {
         if (!sender.hasPermission("amethy.terminal.version")) {
@@ -83,12 +41,10 @@ public class AmethyTerminalCommand implements CommandExecutor {
         try {
           if (Updater.isLatest()) {
             tail = "[최신 버전]";
-          }
-          else {
+          } else {
             tail = "[업데이트 가능]";
           }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
           tail = "[버전 확인 실패]";
         }
         // 정보: 플러그인 버전
@@ -125,11 +81,9 @@ public class AmethyTerminalCommand implements CommandExecutor {
         if (args.length >= 2) {
           if (args[1].equalsIgnoreCase("enable")) {
             next = true;
-          }
-          else if (args[1].equalsIgnoreCase("disable")) {
+          } else if (args[1].equalsIgnoreCase("disable")) {
             next = false;
-          }
-          else {
+          } else {
             // 오류: 알 수 없는 args[1]
             error(sender, ServerMessage.ERROR.UNKNOWN_ARG);
             info(sender, "사용법: /" + label + " " + args[0] + " (enable|disable)");
@@ -139,8 +93,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
           AmethyTerminal.CONFIG.set("debug", AmethyTerminal.DEBUG);
           // 정보: 변경된 디버그 메시지 표시 여부
           info(sender, "디버그 메시지 출력이 " + (next ? "" : "비") + "활성화되었습니다.");
-        }
-        else {
+        } else {
           // 정보: 현재 디버그 메시지 표시 여부
           info(sender, "현재 디버그 메시지 출력은 " + (next ? "" : "비") + "활성화되어 있습니다.");
         }
@@ -159,8 +112,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
           String version;
           try {
             version = Updater.getLatest();
-          }
-          catch (Exception e) {
+          } catch (Exception e) {
             // 오류: 버전 확인 실패
             error(sender, "버전 확인 실패. (" + e.getMessage() + ")");
             executor.shutdown();
@@ -184,8 +136,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
           File file;
           try {
             file = Updater.download(version);
-          }
-          catch (Exception e) {
+          } catch (Exception e) {
             // 오류: 파일 다운로드 실패
             error(sender, "파일 다운로드 실패. (" + e.getMessage() + ")");
             executor.shutdown();
@@ -197,8 +148,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
           info(sender, "플러그인 업데이트 중...");
           try {
             Updater.update(file, version);
-          }
-          catch (Exception e) {
+          } catch (Exception e) {
             // 오류: 업데이트 실패
             error(sender, "플러그인 업데이트 실패. (" + e.getMessage() + ")");
             executor.shutdown();
@@ -228,11 +178,9 @@ public class AmethyTerminalCommand implements CommandExecutor {
             if (args.length >= 3) {
               if (args[2].equalsIgnoreCase("enable")) {
                 next = true;
-              }
-              else if (args[2].equalsIgnoreCase("disable")) {
+              } else if (args[2].equalsIgnoreCase("disable")) {
                 next = false;
-              }
-              else {
+              } else {
                 // 오류: 알 수 없는 args[2]
                 error(sender, ServerMessage.ERROR.UNKNOWN_ARG);
                 info(sender, "사용법: /" + label + " " + args[0] + " " + args[1] + " [enable|disable]");
@@ -242,23 +190,19 @@ public class AmethyTerminalCommand implements CommandExecutor {
               AmethyTerminal.CONFIG.set("updater.automation", Updater.AUTOMATION);
               // 정보: 변경된 업데이터 자동화 여부
               info(sender, "업데이터 자동화가 " + (next ? "" : "비") + "활성화되었습니다.");
-            }
-            else {
+            } else {
               // 정보: 현재 업데이터 자동화 여부
               info(sender, "현재 업데이트 자동화가 " + (next ? "" : "비") + "활성화되어 있습니다.");
             }
             return true;
-          }
-          else if (args[1].equalsIgnoreCase("channel")) {
+          } else if (args[1].equalsIgnoreCase("channel")) {
             String next;
             if (args.length >= 3) {
               if (args[2].equalsIgnoreCase("release")) {
                 next = "release";
-              }
-              else if (args[2].equalsIgnoreCase("dev")) {
+              } else if (args[2].equalsIgnoreCase("dev")) {
                 next = "dev";
-              }
-              else {
+              } else {
                 // 오류: 알 수 없는 args[2]
                 error(sender, ServerMessage.ERROR.UNKNOWN_ARG);
                 info(sender, "사용법: /" + label + " " + args[0] + " " + args[1] + " [release|dev]");
@@ -268,21 +212,18 @@ public class AmethyTerminalCommand implements CommandExecutor {
               AmethyTerminal.CONFIG.set("updater.channel", Updater.CHANNEL);
               // 정보: 변경된 업데이터 채널
               info(sender, "업데이터 채널이 " + next + " 채널로 변경되었습니다.");
-            }
-            else {
+            } else {
               // 정보: 현재 업데이터 채널
               info(sender, "현재 업데이터 채널은 " + Updater.CHANNEL + " 채널입니다.");
             }
             return true;
-          }
-          else {
+          } else {
             // 오류: 알 수 없는 args[1]
             error(sender, ServerMessage.ERROR.UNKNOWN_ARG);
             info(sender, "사용법: /" + label + " " + args[0] + " (channel|automation)");
             return true;
           }
-        }
-        else {
+        } else {
           // 오류: args[1] 필요
           error(sender, ServerMessage.ERROR.INSUFFICIENT_ARGS);
           info(sender, "사용법: /" + label + " " + args[0] + " (channel|automation)");
@@ -309,13 +250,11 @@ public class AmethyTerminalCommand implements CommandExecutor {
           if (TerminalNodeAPI.grant(aid)) {
             // 정보: 권한 부여 성공
             info(sender, "터미널 권한이 성공적으로 부여되었습니다.");
-          }
-          else {
+          } else {
             // 오류: 권한 부여 실패
             error(sender, "터미널 권한 부여에 실패하였습니다.");
           }
-        }
-        else {
+        } else {
           // 오류: args[1] 필요
           error(sender, ServerMessage.ERROR.INSUFFICIENT_ARGS);
           info(sender, "사용법: /" + label + " " + args[0] + " (channel|automation)");
