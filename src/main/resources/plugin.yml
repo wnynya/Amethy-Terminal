@@ -27,5 +27,5 @@ loadbefore:
 commands:
   amethyterminal:
     permission: amethy.terminal.command.amethyterminal
-    usage: '/<command> (version|reload|debug|update|updater)'
+    usage: '/<command> (version|reload|debug|update|updater|grant)'
     aliases: [at, aterm]
