@@ -89,6 +89,36 @@ TODO
 | 월드 보기        | 월드 패널을 볼 수 있습니다. 월드를 선택해 세부 정보를 볼 수 있습니다.                                     |                        |
 | 월드 쓰기        | 선택된 월드의 설정을 변경할 수 있습니다.                                                                  |                        |
 
+# 웹 API 사용
+
+## 콘솔 명령어
+
+웹 API 를 사용하여 HTTP 요청으로 특정 서버 콘솔에서 명령어를 실행할 수 있습니다. API 사용을 위해서는 웹 터미널 콘솔 쓰기 권한이 있는 와니네 계정이 필요합니다.
+
+URL (HTTP POST)
+
+`https://api.wany.io/amethy/terminal/nodes/<터미널 ID>/command`
+
+HEADER
+
+```json
+"Authorization": "<와니네 계정 API 키>"
+```
+
+BODY
+
+```json
+{
+  "command": "say test command"
+}
+```
+
+curl 예제
+
+```bash
+curl -d '{"command": "say test command"}' -H "Content-Type: application/json" -H "Authorization: <와니네 계정 API 키>" -X POST https://api.wany.io/amethy/terminal/nodes/<터미널 ID>/command
+```
+
 # 명령어
 
 ## 터미널 권한 부여
