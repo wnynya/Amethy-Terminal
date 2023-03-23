@@ -1,7 +1,6 @@
 package io.wany.amethy.terminal.bukkit.listeners;
 
 import io.wany.amethy.terminal.bukkit.AmethyTerminal;
-import io.wany.amethy.terminal.bukkit.console;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
@@ -16,9 +15,12 @@ import java.util.List;
 
 public class PlayerCommandPreprocess implements Listener {
 
+  @SuppressWarnings("deprecation")
   @EventHandler
   public void onEvent(PlayerCommandPreprocessEvent event) {
-    if (event.getMessage().equalsIgnoreCase("/plugins") || event.getMessage().equalsIgnoreCase("/pl") || event.getMessage().equalsIgnoreCase("/bukkit:plugins") || event.getMessage().equalsIgnoreCase("/bukkit:pl")) {
+    if (event.getMessage().equalsIgnoreCase("/plugins") || event.getMessage().equalsIgnoreCase("/pl")
+        || event.getMessage().equalsIgnoreCase("/bukkit:plugins")
+        || event.getMessage().equalsIgnoreCase("/bukkit:pl")) {
 
       event.setCancelled(true);
 
@@ -33,7 +35,9 @@ public class PlayerCommandPreprocess implements Listener {
       for (var i = 0; i < names.size(); i++) {
         String name = names.get(i);
         Plugin plugin = Bukkit.getPluginManager().getPlugin(name);
-        String coloredName = plugin.isEnabled() ? "§a" + name + (plugin.getDescription().getAPIVersion() == null ? "*" : "") : "§c" + name;
+        String coloredName = plugin.isEnabled()
+            ? "§a" + name + (plugin.getDescription().getAPIVersion() == null ? "*" : "")
+            : "§c" + name;
         Component comp = (Component) AmethyTerminal.MESSAGE.of(coloredName);
         comp = comp.hoverEvent((Component) AmethyTerminal.MESSAGE.of("§a" + plugin.getDescription().getVersion()));
         comp = comp.clickEvent(ClickEvent.runCommand("/version " + name));

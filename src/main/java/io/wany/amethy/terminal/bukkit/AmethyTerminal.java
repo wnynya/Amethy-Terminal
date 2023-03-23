@@ -2,7 +2,6 @@ package io.wany.amethy.terminal.bukkit;
 
 import io.wany.amethy.terminal.bukkit.commands.AmethyTerminalCommand;
 import io.wany.amethy.terminal.bukkit.commands.AmethyTerminalTabCompleter;
-import io.wany.amethy.terminal.bukkit.listeners.PlayerCommandPreprocess;
 import io.wany.amethy.terminal.bukkit.modules.*;
 import io.wany.amethyst.Json;
 import org.bukkit.Bukkit;
@@ -19,7 +18,8 @@ import java.io.File;
  * Amethy Terminal (Bukkit)
  * https://amethy.wany.io
  * https://github.com/wnynya/Amethy-Terminal
- * <p></p>
+ * <p>
+ * </p>
  * ©2023 Wany <sung@wany.io> (https://wany.io)
  */
 
@@ -63,16 +63,14 @@ public class AmethyTerminal extends JavaPlugin {
 
     if (CONFIG.has("debug")) {
       DEBUG = CONFIG.getBoolean("debug");
-    }
-    else {
+    } else {
       CONFIG.set("debug", false);
     }
 
     String javaVersion = System.getProperty("java.version");
     if (javaVersion.startsWith("1.")) {
       javaVersion = javaVersion.substring(2, 3);
-    }
-    else {
+    } else {
       int dot = javaVersion.indexOf(".");
       if (dot != -1) {
         javaVersion = javaVersion.substring(0, dot);
