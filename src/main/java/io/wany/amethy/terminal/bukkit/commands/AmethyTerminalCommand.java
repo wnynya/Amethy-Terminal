@@ -292,7 +292,7 @@ public class AmethyTerminalCommand implements CommandExecutor {
 
       // 터미널 권한 부여
       case "grant": {
-        if (!(sender instanceof Player)) {
+        if (sender instanceof Player) {
           // 오류: 콘솔 명령어로만 사용 가능
           error(sender, ServerMessage.ERROR.ONLY_CONSOLE);
           return true;
