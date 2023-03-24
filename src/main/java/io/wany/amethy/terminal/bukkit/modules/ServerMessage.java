@@ -1,5 +1,8 @@
 package io.wany.amethy.terminal.bukkit.modules;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 public interface ServerMessage {
 
   Object of(Object... objects);
