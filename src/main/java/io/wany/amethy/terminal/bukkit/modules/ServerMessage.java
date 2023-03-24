@@ -30,6 +30,12 @@ public interface ServerMessage {
     send(audience, prefix, "§e§l[오류]: ", objects);
   }
 
+  default void broadcast(Object... o) {
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      send(player, null, null, o);
+    }
+  }
+
   @SuppressWarnings("unused")
   class ERROR {
     public static final String INSUFFICIENT_ARGS = "명령어 인자가 부족합니다.";
