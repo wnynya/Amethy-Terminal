@@ -1,5 +1,8 @@
 package io.wany.amethy.terminal.bukkit.modules;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 public interface ServerMessage {
 
   Object of(Object... objects);
@@ -28,6 +31,12 @@ public interface ServerMessage {
 
   default void error(Object audience, String prefix, Object... objects) {
     send(audience, prefix, "§e§l[오류]: ", objects);
+  }
+
+  default void broadcast(Object... o) {
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      send(player, null, null, o);
+    }
   }
 
   @SuppressWarnings("unused")

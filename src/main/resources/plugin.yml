@@ -1,5 +1,5 @@
 name: Amethy-Terminal
-version: 1.0.1-dev
+version: 1.0.1
 main: io.wany.amethy.terminal.bukkit.AmethyTerminal
 
 description: Amethy Terminal Node Plugin for Bukkit Servers. Provides remote terminal for Minecraft servers in web.
@@ -27,5 +27,5 @@ loadbefore:
 commands:
   amethyterminal:
     permission: amethy.terminal.command.amethyterminal
-    usage: '/<command> (version|reload|debug|update|updater)'
+    usage: '/<command> (version|reload|debug|update|updater|grant)'
     aliases: [at, aterm]

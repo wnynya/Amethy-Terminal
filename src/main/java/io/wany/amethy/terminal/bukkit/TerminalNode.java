@@ -25,6 +25,7 @@ public class TerminalNode {
   protected static WebSocketClient WEBSOCKET;
   protected static boolean OPENED = false;
   protected static boolean DISABLED = false;
+  protected static boolean FAILED = true;
 
   private static final ExecutorService onLoadExecutor = Executors.newFixedThreadPool(1);
   private static final Timer onLoadTimer = new Timer();
@@ -39,7 +40,7 @@ public class TerminalNode {
       onLoadTimer.schedule(new TimerTask() {
         @Override
         public void run() {
-          if (!OPENED && !DISABLED) {
+          if (!OPENED && !DISABLED && FAILED) {
             open();
           }
         }
@@ -84,8 +85,7 @@ public class TerminalNode {
     if (!TerminalNodeAPI.ping()) {
       try {
         TimeUnit.SECONDS.sleep(1);
-      }
-      catch (InterruptedException ignored) {
+      } catch (InterruptedException ignored) {
       }
       return;
     }
@@ -113,8 +113,7 @@ public class TerminalNode {
 
     try {
       WEBSOCKET = new WebSocketClient(new URI("wss://" + API), options);
-    }
-    catch (Exception ignored) {
+    } catch (Exception ignored) {
     }
 
     // 연결 수립
@@ -142,13 +141,14 @@ public class TerminalNode {
     WEBSOCKET.on("failed", (args) -> {
       WEBSOCKET.close();
       WEBSOCKET.disable();
+      FAILED = true;
       console.debug("Connection Failed");
     });
 
     try {
+      FAILED = false;
       WEBSOCKET.open();
-    }
-    catch (Exception ignored) {
+    } catch (Exception ignored) {
     }
 
   }
