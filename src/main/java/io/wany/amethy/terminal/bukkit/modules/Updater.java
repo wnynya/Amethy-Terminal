@@ -35,27 +35,29 @@ public class Updater {
   private static File PLUGINS_DIR;
   private static String VERSION;
 
+  @SuppressWarnings("deprecation")
   public static void onEnable() {
 
     PLUGIN = AmethyTerminal.PLUGIN;
+    Json CONFIG = AmethyTerminal.CONFIG;
     FILE = AmethyTerminal.FILE;
     PLUGINS_DIR = FILE.getParentFile();
     VERSION = PLUGIN.getDescription().getVersion();
 
     // 콘피그에서 업데이터 채널 가져오기
-    if (AmethyTerminal.CONFIG.has("updater.channel")) {
-      CHANNEL = AmethyTerminal.CONFIG.getString("updater.channel");
+    if (CONFIG.has("updater.channel")) {
+      CHANNEL = CONFIG.getString("updater.channel");
     }
     else {
-      AmethyTerminal.CONFIG.set("updater.channel", CHANNEL);
+      CONFIG.set("updater.channel", CHANNEL);
     }
 
     // 콘피그에서 업데이터 자동화 여부 가져오기
-    if (AmethyTerminal.CONFIG.has("updater.automation")) {
-      AUTOMATION = AmethyTerminal.CONFIG.getBoolean("updater.automation");
+    if (CONFIG.has("updater.automation")) {
+      AUTOMATION = CONFIG.getBoolean("updater.automation");
     }
     else {
-      AmethyTerminal.CONFIG.set("updater.automation", AUTOMATION);
+      CONFIG.set("updater.automation", AUTOMATION);
     }
 
     // 업데이터 자동화 체커

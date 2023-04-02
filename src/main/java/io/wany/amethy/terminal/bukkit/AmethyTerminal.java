@@ -95,17 +95,21 @@ public class AmethyTerminal extends JavaPlugin {
   @Override
   public void onEnable() {
 
+    if (PLUGIN == null) {
+      onLoad();
+    }
+
     if (DISABLED) {
       console.error("Plugin requires Java version >= 11 to run. Disable plugin.");
       PluginLoader.unload(PLUGIN);
       return;
     }
 
+    Updater.onEnable();
+
     registerCommand("amethyterminal", new AmethyTerminalCommand(), new AmethyTerminalTabCompleter());
 
     TerminalNode.onEnable();
-
-    Updater.onEnable();
 
   }
 
