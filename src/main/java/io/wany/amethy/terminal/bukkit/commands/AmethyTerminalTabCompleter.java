@@ -60,40 +60,45 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
   public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
     String name = command.getName().toLowerCase();
 
-    if (name.equals("amethyterminal")) {// amethyterminal ?
-      if (args.length == 1) {
+    // amethyterminal ?
+    if (name.equals("amethyterminal")) {
+
+      String permPrefix = "amethy.terminal";
+      int agi = 0;
+
+      if (args.length == agi + 1) {
         List<String> list = new ArrayList<>();
-        if (sender.hasPermission("amethy.terminal.version")) {
+        if (sender.hasPermission(permPrefix + ".version")) {
           list.add("version");
         }
-        if (sender.hasPermission("amethy.terminal.reload")) {
+        if (sender.hasPermission(permPrefix + ".reload")) {
           list.add("reload");
         }
-        if (sender.hasPermission("amethy.terminal.debug")) {
+        if (sender.hasPermission(permPrefix + ".debug")) {
           list.add("debug");
         }
-        if (sender.hasPermission("amethy.terminal.updater.update")) {
+        if (sender.hasPermission(permPrefix + ".updater.update")) {
           list.add("update");
         }
-        if (sender.hasPermission("amethy.terminal.updater")) {
+        if (sender.hasPermission(permPrefix + ".updater")) {
           list.add("updater");
         }
-        if (sender instanceof ConsoleCommandSender && sender.hasPermission("amethy.terminal.grant")) {
+        if (sender instanceof ConsoleCommandSender && sender.hasPermission(permPrefix + ".grant")) {
           list.add("grant");
         }
         return autoComplete(list, args[args.length - 1]);
       }
 
-      // amethyterminal [0] ?
-      args[0] = args[0].toLowerCase();
-      switch (args[0].toLowerCase()) {
+      // ... [agi] ?
+      args[agi] = args[agi].toLowerCase();
+      switch (args[agi].toLowerCase()) {
 
         case "debug": {
           if (!sender.hasPermission("amethy.terminal.debug")) {
             return Collections.emptyList();
           }
-          // amethyterminal debug ?
-          if (args.length == 2) {
+          // ... debug ?
+          if (args.length == agi + 2) {
             List<String> list = listOf("enable", "disable");
             return autoComplete(list, args[args.length - 1]);
           }
@@ -121,20 +126,20 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
           if (!sender.hasPermission("amethy.terminal.updater")) {
             return Collections.emptyList();
           }
-          // amethyterminal updater ?
-          if (args.length == 2) {
+          // ... updater ?
+          if (args.length == agi + 2) {
             List<String> list = listOf("channel", "automation");
             return autoComplete(list, args[args.length - 1]);
           }
-          // amethyterminal updater [1] ?
-          else if (args.length == 3) {
-            // amethyterminal updater channel ?
-            if (args[1].equalsIgnoreCase("channel")) {
+          // ... updater [agi + 1] ?
+          else if (args.length == agi + 3) {
+            // ... updater channel ?
+            if (args[agi + 1].equalsIgnoreCase("channel")) {
               List<String> list = listOf("release", "dev");
               return autoComplete(list, args[args.length - 1]);
             }
-            // amethyterminal updater automation ?
-            else if (args[1].equalsIgnoreCase("automation")) {
+            // ... updater automation ?
+            else if (args[agi + 1].equalsIgnoreCase("automation")) {
               List<String> list = listOf("enable", "disable");
               return autoComplete(list, args[args.length - 1]);
             }
