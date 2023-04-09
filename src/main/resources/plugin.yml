@@ -4,7 +4,7 @@ main: io.wany.amethy.terminal.bukkit.AmethyTerminal
 
 description: Amethy terminal node plugin for bukkit servers. Provides remote terminal for minecraft servers in web.
 author: Wany
-website: https://amethy.wany.io
+website: https://amethy.wany.io/terminal
 
 api-version: 1.14
 loadbefore:
