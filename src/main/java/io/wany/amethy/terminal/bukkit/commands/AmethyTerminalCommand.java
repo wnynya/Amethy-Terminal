@@ -19,11 +19,11 @@ public class AmethyTerminalCommand implements CommandExecutor {
 
     String permPrefix = "amethy.terminal";
     int agi = 0;
-    
+
     if (args.length == agi) {
       // 오류: args[agi] 필요
       error(sender, ServerMessage.ERROR.INSUFFICIENT_ARGS);
-      info(sender, "사용법: /" + label + " (version|reload|debug|update|updater)");
+      info(sender, "사용법: /" + label + " (version|reload|debug|update|updater|grant)");
       return true;
     }
 
