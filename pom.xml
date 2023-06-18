@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.wany.amethy.terminal.bukkit</groupId>
-  <artifactId>Amethy-Terminal-Bukkit</artifactId>
+  <artifactId>Amethy-Terminal</artifactId>
   <version>1.0.1-dev</version>
 
   <name>Amethy-Terminal-Bukkit</name>

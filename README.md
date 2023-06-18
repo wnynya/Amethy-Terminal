@@ -116,7 +116,11 @@ BODY
 curl 예제
 
 ```bash
-curl -d '{"command": "say test command"}' -H "Content-Type: application/json" -H "Authorization: <와니네 계정 API 키>" -X POST https://api.wany.io/amethy/terminal/nodes/<터미널 ID>/command
+curl \
+-d '{"command": "say test command"}' \
+-H "Content-Type: application/json" \
+-H "Authorization: <와니네 계정 API 키>" \
+-X POST https://api.wany.io/amethy/terminal/nodes/<터미널 ID>/command
 ```
 
 # 명령어
