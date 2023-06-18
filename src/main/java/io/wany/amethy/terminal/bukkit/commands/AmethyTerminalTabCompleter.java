@@ -90,7 +90,6 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
       }
 
       // ... [agi] ?
-      args[agi] = args[agi].toLowerCase();
       switch (args[agi].toLowerCase()) {
 
         case "debug": {
@@ -101,8 +100,7 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
           if (args.length == agi + 2) {
             List<String> list = listOf("enable", "disable");
             return autoComplete(list, args[args.length - 1]);
-          }
-          else {
+          } else {
             return Collections.emptyList();
           }
         }
@@ -142,12 +140,10 @@ public class AmethyTerminalTabCompleter implements TabCompleter {
             else if (args[agi + 1].equalsIgnoreCase("automation")) {
               List<String> list = listOf("enable", "disable");
               return autoComplete(list, args[args.length - 1]);
-            }
-            else {
+            } else {
               return Collections.emptyList();
             }
-          }
-          else {
+          } else {
             return Collections.emptyList();
           }
         }
