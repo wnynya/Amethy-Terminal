@@ -34,7 +34,7 @@ TODO
 # 설치와 기본 설정
 
 1. 아래의 링크 혹은 [아메시 홈페이지](https://amethy.wany.io) 에서 플러그인의 최신 버전을 다운로드합니다.<br>
-   [`Amethy-Terminal-Bukkit.jar (클릭하여 다운로드)`](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/release/latest/Amethy-Terminal-Bukkit.jar)
+   [`Amethy-Terminal-Bukkit.jar (클릭하여 다운로드)`](https://api.wany.io/amethy/repository/Amethy-Terminal-Bukkit/release/1.0.1/Amethy-Terminal-Bukkit.jar)
 
 2. `Amethy-Terminal-Bukkit.jar` 파일을 마인크래프트 서버의 `plugins` 디렉터리에 넣습니다.
 
